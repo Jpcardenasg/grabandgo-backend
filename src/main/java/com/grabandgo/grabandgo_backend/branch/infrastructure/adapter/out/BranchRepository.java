@@ -10,7 +10,7 @@ import com.grabandgo.grabandgo_backend.branch.domain.Branch;;
  * BranchRepository
  */
 @Repository
-public interface BranchRepository extends JpaRepository<Long, Branch> {
+public interface BranchRepository extends JpaRepository<Branch, Long> {
 
     Optional<Branch> finByName();
 

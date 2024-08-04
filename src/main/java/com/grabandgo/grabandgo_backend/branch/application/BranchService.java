@@ -1,5 +1,16 @@
 package com.grabandgo.grabandgo_backend.branch.application;
 
-public class BranchService {
+import java.util.List;
 
+import com.grabandgo.grabandgo_backend.branch.domain.Branch;
+
+public interface BranchService {
+
+    Branch saveBranch(Branch branch);
+
+    Branch updateBranch(Long id ,Branch branch);
+
+    void deleteBranch(Long id);
+
+    List<Branch> findAll();
 }
