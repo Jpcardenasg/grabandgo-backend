@@ -1,8 +1,10 @@
 package com.grabandgo.grabandgo_backend.paymentMethod.infrastructure.adapter.out;
 
-/**
- * PaymentTypeRepository
- */
-public class PaymentMethodRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import com.grabandgo.grabandgo_backend.paymentMethod.domain.PaymentMethod;
+
+@Repository
+public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, Long> {
 }

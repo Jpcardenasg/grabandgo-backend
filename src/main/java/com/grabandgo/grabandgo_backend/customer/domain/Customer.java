@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.customer.domain;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.order.domain.Order;
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
@@ -13,9 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Client
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,13 +30,16 @@ public class Customer {
 
     private String postalCode;
 
+    @ManyToOne
+    private Long idCity;
+
     @Nullable
     @ManyToOne
     private Long idEmployee;
 
     @ManyToOne
-    private Long idCity;
+    private Phone phone;
 
-    @OneToMany(mappedBy = "idCustomer")
+    @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 }

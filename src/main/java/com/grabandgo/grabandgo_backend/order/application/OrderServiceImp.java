@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
 import com.grabandgo.grabandgo_backend.order.infrastructure.adapter.out.OrderRepository;
 
-/**
- * OrderServiceImp
- */
 @Service
 public class OrderServiceImp implements OrderService {
     @Autowired
@@ -37,7 +34,7 @@ public class OrderServiceImp implements OrderService {
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         orderToUpdate.setDetails(order.getDetails());
         orderToUpdate.setEstimatedDelieryDate(order.getEstimatedDelieryDate());
-        orderToUpdate.setIdCustomer(order.getIdCustomer());
+        orderToUpdate.setCustomer(order.getCustomer());
         orderToUpdate.setOderDate(order.getOderDate());
         orderToUpdate.setShippingDate(order.getShippingDate());
         orderToUpdate.setStatus(order.getStatus());

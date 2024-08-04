@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.customer.application.CustomerService;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 
-/**
- * ClientAdapter
- */
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -46,6 +43,6 @@ public class CustomerController {
 
     @GetMapping("/allCustomers")
     public ResponseEntity<List<Customer>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+        return ResponseEntity.ok(service.fetchCustomersList());
     }
 }

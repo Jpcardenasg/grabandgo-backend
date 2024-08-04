@@ -1,9 +1,10 @@
 package com.grabandgo.grabandgo_backend.region.infrastructure.adapter.out;
 
-/**
- * RegionRepository
- */
-public class RegionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    
+import com.grabandgo.grabandgo_backend.region.domain.Region;
+
+@Repository
+public interface RegionRepository extends JpaRepository<Region, Long> {
 }

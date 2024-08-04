@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.customer.infrastructure.adapter.out.CustomerRepository;
 
-/**
- * CustomerServiceImp
- */
 @Service
 public class CustomerServiceImp implements CustomerService {
+
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -22,7 +20,7 @@ public class CustomerServiceImp implements CustomerService {
     }
 
     @Override
-    public List<Customer> findAll() {
+    public List<Customer> fetchCustomersList() {
         return customerRepository.findAll();
     }
 
@@ -42,5 +40,10 @@ public class CustomerServiceImp implements CustomerService {
         customerToUpdate.setName(customer.getName());
         customerToUpdate.setPostalCode(customer.getPostalCode());
         return customerRepository.save(customerToUpdate);
+    }
+
+    @Override
+    public Customer getCustomerById(Long id) {
+        return customerRepository.findById(id).orElse(null);
     }
 }

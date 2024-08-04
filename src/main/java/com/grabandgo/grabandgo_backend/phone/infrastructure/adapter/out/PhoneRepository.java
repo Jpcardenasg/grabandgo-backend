@@ -1,9 +1,10 @@
 package com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.out;
 
-/**
- * PhoneRepository
- */
-public class PhoneRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-    
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+
+@Repository
+public interface PhoneRepository extends JpaRepository<Phone, Long> {
 }

@@ -5,10 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import com.grabandgo.grabandgo_backend.order.domain.Order;
 import java.util.List;
-import com.grabandgo.grabandgo_backend.orderdetails.domain.OrderDetails;
+import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
+import com.grabandgo.grabandgo_backend.orderStatus.domain.OrderStatus;
+
 import java.sql.Date;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
-import com.grabandgo.grabandgo_backend.orderstatus.domain.OrderStatus;
 
 /**
  * OrderRepository
@@ -16,7 +17,7 @@ import com.grabandgo.grabandgo_backend.orderstatus.domain.OrderStatus;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findByDetails(List<OrderDetails> details);
+    List<Order> findByDetails(List<OrderDetail> details);
 
     List<Order> findByEstimatedDelieryDate(Date estimatedDelieryDate);
 
