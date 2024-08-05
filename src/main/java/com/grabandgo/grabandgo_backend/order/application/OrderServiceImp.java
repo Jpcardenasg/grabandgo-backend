@@ -30,15 +30,12 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public Order updateOrder(Long id, Order order) {
-        Order orderToUpdate = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-        orderToUpdate.setDetails(order.getDetails());
-        orderToUpdate.setEstimatedDelieryDate(order.getEstimatedDelieryDate());
-        orderToUpdate.setCustomer(order.getCustomer());
-        orderToUpdate.setOderDate(order.getOderDate());
-        orderToUpdate.setShippingDate(order.getShippingDate());
-        orderToUpdate.setStatus(order.getStatus());
-        return orderRepository.save(orderToUpdate);
+        if (orderRepository.existsById(id)) {
+            order.setId(id);
+            return orderRepository.save(order);
+        } else {
+            throw new RuntimeException("order not found with id: " + id);
+        }
     }
 
 }

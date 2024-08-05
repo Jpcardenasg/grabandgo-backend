@@ -33,13 +33,11 @@ public class OfficeServiceImp implements OfficeService {
 
     @Override
     public Office updateOffice(Long id, Office office) {
-        Office officeToUpdate = officeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Office not found"));
-        officeToUpdate.setAddress1(office.getAddress1());
-        officeToUpdate.setAddress2(office.getAddress2());
-        officeToUpdate.setPostalCode(office.getPostalCode());
-        officeToUpdate.setEmployees(office.getEmployees());
-        officeToUpdate.setCity(office.getCity());
-        return officeRepository.save(officeToUpdate);
+        if (officeRepository.existsById(id)) {
+            office.setId(id);
+            return officeRepository.save(office);
+        } else {
+            throw new RuntimeException("office not found with id: " + id);
+        }
     }
 }

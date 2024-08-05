@@ -33,17 +33,11 @@ public class EmployeeServiceImp implements EmployeeService {
 
     @Override
     public Employee updateEmployee(Long id, Employee employee) {
-        Employee employeeToUpdate = employeeRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
-        employeeToUpdate.setEmail(employee.getEmail());
-        employeeToUpdate.setEmployees(employee.getEmployees());
-        employeeToUpdate.setExtencion(employee.getExtencion());
-        employeeToUpdate.setBoss(employee.getBoss());
-        employeeToUpdate.setOffice(employee.getOffice());
-        employeeToUpdate.setLastName1(employee.getLastName1());
-        employeeToUpdate.setLastName2(employee.getLastName2());
-        employeeToUpdate.setName(employee.getName());
-        employeeToUpdate.setPosition(employee.getPosition());
-        return employeeRepository.save(employeeToUpdate);
+        if (employeeRepository.existsById(id)) {
+            employee.setId(id);
+            return employeeRepository.save(employee);
+        } else {
+            throw new RuntimeException("employee not found with id: " + id);
+        }
     }
 }
