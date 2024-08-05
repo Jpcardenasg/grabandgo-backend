@@ -15,27 +15,30 @@ import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.ou
 public class CustomerContactServiceImp implements CustomerContactService {
 
     @Autowired
-    private CustomerContactRepository CustomerContactRepository;
+    private CustomerContactRepository customerContactRepository;
 
     @Override
     public void deleteCustomerContact(Long id) {
-        CustomerContactRepository.deleteById(id);
+        customerContactRepository.deleteById(id);
     }
 
     @Override
     public List<CustomerContact> findAll() {
-        return CustomerContactRepository.findAll();
+        return customerContactRepository.findAll();
     }
 
     @Override
-    public CustomerContact saveCustomerContact(CustomerContact CustomerContact) {
-        return CustomerContactRepository.save(CustomerContact);
+    public CustomerContact saveCustomerContact(CustomerContact customerContact) {
+        return customerContactRepository.save(customerContact);
     }
 
     @Override
-    public CustomerContact updateCustomerContact(Long id, CustomerContact CustomerContact) {
-        CustomerContact CustomerContactToUpdate = CustomerContactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("CustomerContact not found"));
-        return CustomerContactRepository.save(CustomerContactToUpdate);
+    public CustomerContact updateCustomerContact(Long id, CustomerContact customerContact) {
+        if (customerContactRepository.existsById(id)) {
+            customerContact.setId(id);
+            return customerContactRepository.save(customerContact);
+        } else {
+            throw new RuntimeException("customerContact not found with id: " + id);
+        }
     }
 }

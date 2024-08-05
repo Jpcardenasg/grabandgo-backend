@@ -1,5 +1,8 @@
 package com.grabandgo.grabandgo_backend.customerContact.domain;
 
+import com.grabandgo.grabandgo_backend.customer.domain.Customer;
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -20,7 +23,12 @@ public class CustomerContact {
     private Long id;
     private String name;
     private String lastName;
+    private String email;
+
     @ManyToOne
-    private Long idCustomer;
+    private Customer customer;
+
+    @ManyToOne
+    private Phone phone;
 
 }

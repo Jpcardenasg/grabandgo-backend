@@ -21,8 +21,10 @@ public class Inventory {
 
     @Id
     private Long id;
+    
     @Nullable
     private Long minStock;
+
     private Long maxStock;
     @Nullable
     private Long currentStock;

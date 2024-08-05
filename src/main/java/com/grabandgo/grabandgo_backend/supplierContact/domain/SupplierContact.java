@@ -1,4 +1,7 @@
-package com.grabandgo.grabandgo_backend.suppliercontact.domain;
+package com.grabandgo.grabandgo_backend.supplierContact.domain;
+
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,5 +26,8 @@ public class SupplierContact {
     private String email;
 
     @ManyToOne
-    private Long nit;
+    private Supplier nit;
+
+    @ManyToOne
+    private Phone phone;
 }

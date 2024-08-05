@@ -1,5 +1,8 @@
 package com.grabandgo.grabandgo_backend.branch.domain;
 
+import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -18,8 +21,9 @@ public class Branch {
     private String direction;
 
     @ManyToOne
-    private Long nit;
+    private Supplier supplier;
+    
     @ManyToOne
-    private Long cityId;
+    private City city;
 
 }

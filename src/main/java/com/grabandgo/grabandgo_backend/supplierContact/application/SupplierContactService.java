@@ -1,8 +1,8 @@
-package com.grabandgo.grabandgo_backend.suppliercontact.application;
+package com.grabandgo.grabandgo_backend.supplierContact.application;
 
 import java.util.List;
 
-import com.grabandgo.grabandgo_backend.suppliercontact.domain.SupplierContact;
+import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
 /**
  * SupplierContactServiceImp

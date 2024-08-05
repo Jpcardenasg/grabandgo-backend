@@ -8,9 +8,11 @@ public interface BranchService {
 
     Branch saveBranch(Branch branch);
 
-    Branch updateBranch(Long id ,Branch branch);
+    Branch updateBranch(Long id, Branch branch);
 
     void deleteBranch(Long id);
 
     List<Branch> findAll();
+
+    Branch findByName(String name);
 }

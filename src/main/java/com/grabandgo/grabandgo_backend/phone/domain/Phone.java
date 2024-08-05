@@ -2,11 +2,10 @@ package com.grabandgo.grabandgo_backend.phone.domain;
 
 import java.util.List;
 
-import com.grabandgo.grabandgo_backend.customer.domain.Customer;
+import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 import com.grabandgo.grabandgo_backend.phoneType.domain.PhoneType;
-import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
+import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,11 +32,9 @@ public class Phone {
     private PhoneType phoneType;
 
     @OneToMany(mappedBy = "phone")
-    @Nullable
-    private List<Customer> customers;
+    private List<CustomerContact> customerContacts;
 
     @OneToMany(mappedBy = "phone")
-    @Nullable
-    private List<Supplier> suppliers;
+    private List<SupplierContact> supplierContacts;
 
 }

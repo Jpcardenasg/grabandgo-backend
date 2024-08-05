@@ -15,28 +15,30 @@ import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepos
 public class CityServiceImp implements CityService {
 
     @Autowired
-    private CityRepository CityRepository;
+    private CityRepository cityRepository;
 
     @Override
     public void deleteCity(Long id) {
-        CityRepository.deleteById(id);
+        cityRepository.deleteById(id);
     }
 
     @Override
     public List<City> findAll() {
-        return CityRepository.findAll();
+        return cityRepository.findAll();
     }
 
     @Override
     public City saveCity(City city) {
-        return CityRepository.save(city);
+        return cityRepository.save(city);
     }
 
     @Override
     public City updateCity(Long id, City city) {
-        City cityToUpdate = CityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("City not found"));
-        cityToUpdate.setName(city.getName());
-        return CityRepository.save(cityToUpdate);
+        if (cityRepository.existsById(id)) {
+            city.setId(id);
+            return cityRepository.save(city);
+        } else {
+            throw new RuntimeException("city not found with id: " + id);
+        }
     }
 }

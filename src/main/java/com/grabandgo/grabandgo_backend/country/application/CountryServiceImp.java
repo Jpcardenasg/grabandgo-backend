@@ -33,8 +33,11 @@ public class CountryServiceImp implements CountryService {
 
     @Override
     public Country updateCountry(Long id, Country country) {
-        Country countryToUpdate = countryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Country not found"));
-        return countryRepository.save(countryToUpdate);
+        if (countryRepository.existsById(id)) {
+            country.setId(id);
+            return countryRepository.save(country);
+        } else {
+            throw new RuntimeException("country not found with id: " + id);
+        }
     }
 }

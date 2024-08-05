@@ -28,9 +28,9 @@ public class Office {
     private String address1;
     private String address2;
 
-    @OneToMany(mappedBy = "idOffice")
+    @OneToMany(mappedBy = "Office")
     private List<Employee> employees;
 
     @ManyToOne
-    private City idCity;
+    private City city;
 }

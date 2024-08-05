@@ -2,6 +2,8 @@ package com.grabandgo.grabandgo_backend.employee.domain;
 
 import java.util.List;
 
+import com.grabandgo.grabandgo_backend.office.domain.Office;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -31,11 +33,12 @@ public class Employee {
     @Nullable
     private String position;
 
-    @OneToMany(mappedBy = "idBoss")
+    @OneToMany(mappedBy = "boss")
     private List<Employee> employees;
-    @ManyToOne
-    private Long idBoss;
 
     @ManyToOne
-    private Long idOffice;
+    private Employee boss;
+
+    @ManyToOne
+    private Office office;
 }

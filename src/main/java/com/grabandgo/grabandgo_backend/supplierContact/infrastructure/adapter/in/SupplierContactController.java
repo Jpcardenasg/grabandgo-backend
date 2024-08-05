@@ -1,4 +1,4 @@
-package com.grabandgo.grabandgo_backend.suppliercontact.infrastructure.adapter.in;
+package com.grabandgo.grabandgo_backend.supplierContact.infrastructure.adapter.in;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grabandgo.grabandgo_backend.suppliercontact.application.SupplierContactService;
-import com.grabandgo.grabandgo_backend.suppliercontact.domain.SupplierContact;
+import com.grabandgo.grabandgo_backend.supplierContact.application.SupplierContactService;
+import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
 /**
  * BranchContactAdapter

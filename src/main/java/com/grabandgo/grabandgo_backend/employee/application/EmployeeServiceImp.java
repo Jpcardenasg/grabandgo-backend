@@ -38,8 +38,8 @@ public class EmployeeServiceImp implements EmployeeService {
         employeeToUpdate.setEmail(employee.getEmail());
         employeeToUpdate.setEmployees(employee.getEmployees());
         employeeToUpdate.setExtencion(employee.getExtencion());
-        employeeToUpdate.setIdBoss(employee.getIdBoss());
-        employeeToUpdate.setIdOffice(employee.getIdOffice());
+        employeeToUpdate.setBoss(employee.getBoss());
+        employeeToUpdate.setOffice(employee.getOffice());
         employeeToUpdate.setLastName1(employee.getLastName1());
         employeeToUpdate.setLastName2(employee.getLastName2());
         employeeToUpdate.setName(employee.getName());

@@ -1,11 +1,11 @@
-package com.grabandgo.grabandgo_backend.suppliercontact.application;
+package com.grabandgo.grabandgo_backend.supplierContact.application;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.grabandgo.grabandgo_backend.suppliercontact.domain.SupplierContact;
-import com.grabandgo.grabandgo_backend.suppliercontact.infrastructure.adapter.out.SupplierContactRepository;
+import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
+import com.grabandgo.grabandgo_backend.supplierContact.infrastructure.adapter.out.SupplierContactRepository;
 
 /**
  * SupplierContactService

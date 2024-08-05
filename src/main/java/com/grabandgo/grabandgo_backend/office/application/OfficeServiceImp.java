@@ -39,7 +39,7 @@ public class OfficeServiceImp implements OfficeService {
         officeToUpdate.setAddress2(office.getAddress2());
         officeToUpdate.setPostalCode(office.getPostalCode());
         officeToUpdate.setEmployees(office.getEmployees());
-        officeToUpdate.setIdCity(office.getIdCity());
+        officeToUpdate.setCity(office.getCity());
         return officeRepository.save(officeToUpdate);
     }
 }

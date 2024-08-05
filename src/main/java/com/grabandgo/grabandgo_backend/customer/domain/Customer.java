@@ -2,6 +2,8 @@ package com.grabandgo.grabandgo_backend.customer.domain;
 
 import java.util.List;
 
+import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 
@@ -23,6 +25,7 @@ public class Customer {
     @Id
     private Long id;
     private String name;
+    private String lastName;
     private String address1;
 
     @Nullable
@@ -31,13 +34,16 @@ public class Customer {
     private String postalCode;
 
     @ManyToOne
-    private Long idCity;
+    private City city;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerContact> contacts;
 
     @Nullable
     @ManyToOne
     private Long idEmployee;
 
-    @ManyToOne
+    @OneToMany(mappedBy = "customer")
     private Phone phone;
 
     @OneToMany(mappedBy = "customer")

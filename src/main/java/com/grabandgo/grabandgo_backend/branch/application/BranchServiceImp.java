@@ -12,14 +12,14 @@ import com.grabandgo.grabandgo_backend.branch.infrastructure.adapter.out.BranchR
  * BranchServiceImp
  */
 @Service
-public class BranchServiceImp implements BranchService{
+public class BranchServiceImp implements BranchService {
 
     @Autowired
     private BranchRepository branchRepository;
 
     @Override
     public void deleteBranch(Long id) {
-        branchRepository.deleteById(id);    
+        branchRepository.deleteById(id);
     }
 
     @Override
@@ -34,13 +34,17 @@ public class BranchServiceImp implements BranchService{
 
     @Override
     public Branch updateBranch(Long id, Branch branch) {
-        Branch branchToUpdate = branchRepository.findById(id).
-            orElseThrow(() -> new RuntimeException("Branch not found"));
-        branchToUpdate.setCityId(branch.getCityId());
-        branchToUpdate.setDirection(branch.getDirection());
-        branchToUpdate.setNit(branch.getNit());
+        if (branchRepository.existsById(id)) {
+            branch.setId(id);
+            return branchRepository.save(branch);
+        } else {
+            throw new RuntimeException("branch not found with id: " + id);
+        }
+    }
 
-        return branchRepository.save(branchToUpdate);
-    }   
-    
+    @Override
+    public Branch findByName(String name) {
+        return branchRepository.findByName(name);
+    }
+
 }
