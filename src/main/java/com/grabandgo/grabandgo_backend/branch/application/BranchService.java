@@ -14,5 +14,4 @@ public interface BranchService {
 
     List<Branch> findAll();
 
-    Branch findByName(String name);
 }

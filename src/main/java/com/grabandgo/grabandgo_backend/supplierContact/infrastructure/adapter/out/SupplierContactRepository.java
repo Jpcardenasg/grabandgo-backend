@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.supplierContact.infrastructure.adapter.o
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface SupplierContactRepository extends JpaRepository<SupplierContact
 
     List<SupplierContact> findByLastName(String lastName);
 
-    List<SupplierContact> findByNit(Long nit);
+    List<SupplierContact> findBySupplier(Supplier supplier);
 }

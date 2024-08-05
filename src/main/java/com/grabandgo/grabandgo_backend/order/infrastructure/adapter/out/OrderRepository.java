@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByEstimatedDelieryDate(Date estimatedDelieryDate);
 
-    List<Order> findByIdCustomer(Customer idCustomer);
+    List<Order> findByCustomer(Customer customer);
 
     List<Order> findByOderDate(Date oderDate);
 

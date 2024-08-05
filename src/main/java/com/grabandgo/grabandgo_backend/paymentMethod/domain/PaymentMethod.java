@@ -1,5 +1,7 @@
 package com.grabandgo.grabandgo_backend.paymentMethod.domain;
 
+import java.util.List;
+
 import com.grabandgo.grabandgo_backend.payment.domain.Payment;
 
 import jakarta.persistence.Entity;
@@ -23,5 +25,5 @@ public class PaymentMethod {
     private String method;
 
     @OneToMany(mappedBy = "paymentMethod")
-    private Payment payment;
+    private List<Payment> payment;
 }

@@ -28,7 +28,7 @@ public class Office {
     private String address1;
     private String address2;
 
-    @OneToMany(mappedBy = "Office")
+    @OneToMany(mappedBy = "office")
     private List<Employee> employees;
 
     @ManyToOne

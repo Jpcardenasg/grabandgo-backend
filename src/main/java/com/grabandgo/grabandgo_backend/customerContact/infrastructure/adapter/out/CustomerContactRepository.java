@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.o
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 
 import java.util.List;
@@ -13,9 +14,6 @@ import java.util.List;
 @Repository
 public interface CustomerContactRepository extends JpaRepository<CustomerContact, Long> {
 
-    List<CustomerContact> findByIdCustomer(Long idCustomer);
+    List<CustomerContact> findByCustomer(Customer customer);
 
-    List<CustomerContact> findByLastName(String lastName);
-
-    List<CustomerContact> findByName(String name);
 }

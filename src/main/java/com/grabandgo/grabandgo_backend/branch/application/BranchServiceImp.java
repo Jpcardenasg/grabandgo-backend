@@ -42,9 +42,4 @@ public class BranchServiceImp implements BranchService {
         }
     }
 
-    @Override
-    public Branch findByName(String name) {
-        return branchRepository.findByName(name);
-    }
-
 }

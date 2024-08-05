@@ -30,13 +30,13 @@ public class CustomerController {
     }
 
     @PutMapping("/updateCustomer/{customerId}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long customerId, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String customerId, @RequestBody Customer customer) {
         service.updateCustomer(customerId, customer);
         return ResponseEntity.ok(customer);
     }
 
     @DeleteMapping("/deleteCustomer/{customerId}")
-    public ResponseEntity<Long> deleteCustomer(@PathVariable Long customerId) {
+    public ResponseEntity<String> deleteCustomer(@PathVariable String customerId) {
         service.deleteCustomer(customerId);
         return ResponseEntity.ok(customerId);
     }

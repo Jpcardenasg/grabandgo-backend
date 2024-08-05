@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
+import com.grabandgo.grabandgo_backend.office.domain.Office;
+
 import java.util.List;
 
 /**
@@ -17,9 +19,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findByExtencion(String extencion);
 
-    List<Employee> findByIdBoss(Long idBoss);
+    List<Employee> findByBoss(Employee boss);
 
-    List<Employee> findByIdOffice(Long idOffice);
+    List<Employee> findByOffice(Office office);
 
     List<Employee> findByName(String name);
 

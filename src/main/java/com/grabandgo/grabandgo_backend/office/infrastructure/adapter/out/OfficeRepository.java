@@ -19,7 +19,7 @@ public interface OfficeRepository extends JpaRepository<Office, Long> {
 
     List<Office> findByEmployees(List<Employee> employees);
 
-    List<Office> findByIdCity(City idCity);
+    List<Office> findByCity(City city);
 
     List<Office> findByPostalCode(String postalCode);
 }

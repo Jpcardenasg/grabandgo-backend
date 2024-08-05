@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
+import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
-import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
@@ -23,13 +23,10 @@ import lombok.NoArgsConstructor;
 public class Customer {
 
     @Id
-    private Long id;
+    private String id;
     private String name;
     private String lastName;
     private String address1;
-
-    @Nullable
-    private String address2;
 
     private String postalCode;
 
@@ -37,14 +34,11 @@ public class Customer {
     private City city;
 
     @OneToMany(mappedBy = "customer")
-    private List<CustomerContact> contacts;
+    private List<CustomerContact> contactsCustomer;
 
     @Nullable
     @ManyToOne
-    private Long idEmployee;
-
-    @OneToMany(mappedBy = "customer")
-    private Phone phone;
+    private Employee employee;
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
