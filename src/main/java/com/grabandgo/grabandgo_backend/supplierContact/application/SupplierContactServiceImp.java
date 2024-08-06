@@ -34,11 +34,11 @@ public class SupplierContactServiceImp implements SupplierContactService {
 
     @Override
     public SupplierContact updateSupplierContact(Long id, SupplierContact supplierContact) {
-        SupplierContact supplierContactToUpdate = supplierContactRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("SupplierContact not found"));
-        supplierContactToUpdate.setEmail(supplierContact.getEmail());
-        supplierContactToUpdate.setLastName(supplierContact.getLastName());
-        supplierContactToUpdate.setName(supplierContact.getName());
-        return supplierContactRepository.save(supplierContactToUpdate);
+        if (supplierContactRepository.existsById(id)) {
+            supplierContact.setId(id);
+            return supplierContactRepository.save(supplierContact);
+        } else {
+            throw new RuntimeException("supplierContact not found with id: " + id);
+        }
     }
 }

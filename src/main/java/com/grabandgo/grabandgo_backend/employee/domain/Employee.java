@@ -3,12 +3,14 @@ package com.grabandgo.grabandgo_backend.employee.domain;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.office.domain.Office;
+import com.grabandgo.grabandgo_backend.user.domain.User;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,4 +43,7 @@ public class Employee {
 
     @ManyToOne
     private Office office;
+
+    @OneToOne
+    private User user;
 }

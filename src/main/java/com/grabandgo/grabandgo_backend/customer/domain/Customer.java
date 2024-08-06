@@ -6,12 +6,14 @@ import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
+import com.grabandgo.grabandgo_backend.user.domain.User;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -42,4 +44,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
+
+    @OneToOne
+    private User user;
 }
