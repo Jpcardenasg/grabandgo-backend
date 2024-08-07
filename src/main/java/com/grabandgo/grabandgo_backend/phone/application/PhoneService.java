@@ -15,5 +15,4 @@ public interface PhoneService {
     Phone getPhoneById(Long id);
 
     List<Phone> fetchPhonesList();
-
 }

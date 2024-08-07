@@ -1,5 +1,6 @@
 package com.grabandgo.grabandgo_backend.phone.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Phone {
 
     @Id
@@ -32,9 +35,11 @@ public class Phone {
     private PhoneType phoneType;
 
     @OneToMany(mappedBy = "phone")
-    private List<CustomerContact> customerContacts;
+    @Builder.Default
+    private List<CustomerContact> customerContacts = new ArrayList<>();;
 
     @OneToMany(mappedBy = "phone")
-    private List<SupplierContact> supplierContacts;
+    @Builder.Default
+    private List<SupplierContact> supplierContacts = new ArrayList<>();;
 
 }

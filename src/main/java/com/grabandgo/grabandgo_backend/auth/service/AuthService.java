@@ -9,11 +9,20 @@ import lombok.RequiredArgsConstructor;
 
 import com.grabandgo.grabandgo_backend.auth.model.LoginRequest;
 import com.grabandgo.grabandgo_backend.auth.model.RegisterRequest;
+import com.grabandgo.grabandgo_backend.customer.domain.Customer;
+import com.grabandgo.grabandgo_backend.customer.infrastructure.adapter.out.CustomerRepository;
+import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 import com.grabandgo.grabandgo_backend.jwt.JwtService;
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 import com.grabandgo.grabandgo_backend.user.domain.Role;
 import com.grabandgo.grabandgo_backend.user.domain.User;
-import com.grabandgo.grabandgo_backend.user.infrastructure.out.UserRepository;
 import com.grabandgo.grabandgo_backend.auth.model.AuthResponse;
+
+import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.out.CustomerContactRepository;
+import com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.out.PhoneRepository;
+import com.grabandgo.grabandgo_backend.phoneType.infrastructure.adapter.out.PhoneTypeRepository;
+import com.grabandgo.grabandgo_backend.user.infrastructure.out.UserRepository;
+import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
 
 /**
  * AuthService
@@ -22,30 +31,72 @@ import com.grabandgo.grabandgo_backend.auth.model.AuthResponse;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final UserRepository userRepository;
-    private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authManager;
+	private final UserRepository userRepository;
+	private final JwtService jwtService;
+	private final PasswordEncoder passwordEncoder;
+	private final AuthenticationManager authManager;
+	private final CityRepository cityRepository;
+	private final CustomerContactRepository customerContactRepository;
+	private final PhoneRepository phoneRepository;
+	private final CustomerRepository customerRepository;
+	private final PhoneTypeRepository phoneTypeRepository;
 
-    public AuthResponse login(LoginRequest request) {
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token = jwtService.getToken(userDetails);
-        return AuthResponse.builder().token(token).build();
-    }
+	public AuthResponse login(LoginRequest request) {
+		authManager.authenticate(
+				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+		UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
+		String token = jwtService.getToken(userDetails);
+		return AuthResponse.builder().token(token).build();
+	}
 
-    public AuthResponse register(RegisterRequest request) {
-        User user = User.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.CUSTOMER)
-                .build();
+	public AuthResponse register(RegisterRequest request) {
 
-        userRepository.save(user);
+		// CREATE
+		User user = User.builder()
+				.username(request.getUsername())
+				.password(passwordEncoder.encode(request.getPassword()))
+				.role(Role.CUSTOMER)
+				.build();
 
-        return AuthResponse.builder()
-                .token(jwtService.getToken(user))
-                .build();
-    }
+		// CREATE PHONE
+		Phone phone = Phone.builder()
+				.number(request.getPhone().getNumber())
+				.phoneType(request.getPhone().getPhoneType())
+				.prefix(request.getPhone().getPrefix())
+				.build();
+
+		// CREATE CUSTOMER
+		Customer customer = Customer.builder()
+				.id(request.getIdNumber())
+				.name(request.getName())
+				.lastName(request.getLastName())
+				.address1(request.getAddress1())
+				.postalCode(request.getPostalCode())
+				.city(request.getCity())
+				.employee(null)
+				.user(user)
+				.build();
+
+		// SAVE CUSTOMERCONTACT
+		CustomerContact customerContact = CustomerContact.builder()
+				.email(request.getUsername())
+				.customer(customer)
+				.phone(phone)
+				.build();
+
+		// ASSIGNAMENTS
+		phone.getCustomerContacts().add(customerContact);
+		customer.getContactsCustomer().add(customerContact);
+
+		// SAVES
+		phoneRepository.save(phone);
+		userRepository.save(user);
+		customerRepository.save(customer);
+		customerContactRepository.save(customerContact);
+
+		return AuthResponse.builder()
+				.token(jwtService.getToken(user))
+				.build();
+	}
 
 }

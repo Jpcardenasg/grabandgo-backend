@@ -1,5 +1,6 @@
 package com.grabandgo.grabandgo_backend.customer.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
@@ -15,9 +16,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,14 +39,16 @@ public class Customer {
     private City city;
 
     @OneToMany(mappedBy = "customer")
-    private List<CustomerContact> contactsCustomer;
+    @Builder.Default
+    private List<CustomerContact> contactsCustomer = new ArrayList<>();;
 
     @Nullable
     @ManyToOne
     private Employee employee;
 
     @OneToMany(mappedBy = "customer")
-    private List<Order> orders;
+    @Builder.Default
+    private List<Order> orders = new ArrayList<>();;
 
     @OneToOne
     private User user;
