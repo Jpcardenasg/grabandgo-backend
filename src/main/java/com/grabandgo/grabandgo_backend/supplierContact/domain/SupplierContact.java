@@ -1,5 +1,6 @@
 package com.grabandgo.grabandgo_backend.supplierContact.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,9 +30,13 @@ public class SupplierContact {
     private String lastName;
     private String email;
 
+    @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "supplierId")
     private Supplier supplier;
 
+    @JsonBackReference
     @ManyToOne
+    @JoinColumn(name = "phoneId")
     private Phone phone;
 }

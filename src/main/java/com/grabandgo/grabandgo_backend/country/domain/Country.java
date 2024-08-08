@@ -2,9 +2,12 @@ package com.grabandgo.grabandgo_backend.country.domain;
 
 import java.util.List;
 
-import com.grabandgo.grabandgo_backend.region.domain.Region;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +30,7 @@ public class Country {
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "country")
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "country")
     private List<Region> regions;
 }

@@ -2,7 +2,7 @@ package com.grabandgo.grabandgo_backend.region.application;
 
 import java.util.List;
 
-import com.grabandgo.grabandgo_backend.region.domain.Region;
+import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
 
 public interface RegionService {
 
