@@ -20,9 +20,7 @@ import com.grabandgo.grabandgo_backend.auth.model.AuthResponse;
 
 import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.out.CustomerContactRepository;
 import com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.out.PhoneRepository;
-import com.grabandgo.grabandgo_backend.phoneType.infrastructure.adapter.out.PhoneTypeRepository;
 import com.grabandgo.grabandgo_backend.user.infrastructure.out.UserRepository;
-import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
 
 /**
  * AuthService
@@ -35,11 +33,9 @@ public class AuthService {
 	private final JwtService jwtService;
 	private final PasswordEncoder passwordEncoder;
 	private final AuthenticationManager authManager;
-	private final CityRepository cityRepository;
 	private final CustomerContactRepository customerContactRepository;
 	private final PhoneRepository phoneRepository;
 	private final CustomerRepository customerRepository;
-	private final PhoneTypeRepository phoneTypeRepository;
 
 	public AuthResponse login(LoginRequest request) {
 		authManager.authenticate(

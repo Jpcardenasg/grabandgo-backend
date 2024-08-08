@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Component
 @RequiredArgsConstructor
-public class JwtAutenticationFilter extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
@@ -32,28 +32,35 @@ public class JwtAutenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
-        final String token = getTokenFromRequest(request);
-        final String username;
-        if (token == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        username = jwtService.getUsernameFromToken(token);
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-            if (jwtService.isTokenValid(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
-                        null,
-                        userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+        try {
+            final String token = getTokenFromRequest(request);
+            final String username;
+            if (token == null) {
+                filterChain.doFilter(request, response);
+                return;
             }
-        }
-        filterChain.doFilter(request, response);
 
+            username = jwtService.getUsernameFromToken(token);
+
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                if (jwtService.isTokenValid(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
+                            null,
+                            userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+            System.out.println(SecurityContextHolder.getContext().getAuthentication());
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            // Log the exception
+            System.out.println("Authentication Context: " + SecurityContextHolder.getContext().getAuthentication());
+            System.err.println("Error during JWT authentication: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error during JWT authentication");
+        }
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {
