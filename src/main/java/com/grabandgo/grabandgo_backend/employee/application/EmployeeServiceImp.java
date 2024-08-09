@@ -17,7 +17,7 @@ public class EmployeeServiceImp implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Override
-    public void deleteEmployee(Long id) {
+    public void deleteEmployee(String id) {
         employeeRepository.deleteById(id);
     }
 
@@ -32,7 +32,7 @@ public class EmployeeServiceImp implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(Long id, Employee employee) {
+    public Employee updateEmployee(String id, Employee employee) {
         if (employeeRepository.existsById(id)) {
             employee.setId(id);
             return employeeRepository.save(employee);

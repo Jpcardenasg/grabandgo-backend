@@ -10,9 +10,9 @@ import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 public interface EmployeeService {
     Employee saveEmployee(Employee employee);
 
-    Employee updateEmployee(Long id, Employee employee);
+    Employee updateEmployee(String id, Employee employee);
 
-    void deleteEmployee(Long id);
+    void deleteEmployee(String id);
 
     List<Employee> findAll();
 

@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 
@@ -17,6 +18,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -45,9 +47,14 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonBackReference("employee-user")
     @OneToOne(mappedBy = "user")
+    @JoinColumn(name = "employeeId")
     private Employee employee;
+
+    @JsonBackReference("customer-user")
     @OneToOne(mappedBy = "user")
+    @JoinColumn(name = "customerId")
     private Customer customer;
 
     @Override

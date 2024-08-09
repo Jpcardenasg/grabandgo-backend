@@ -36,11 +36,11 @@ public class Customer {
     private String id;
     private String name;
     private String lastName;
-    private String address1;
+    private String address;
 
     private String postalCode;
 
-    @JsonBackReference
+    @JsonBackReference("city-customers")
     @ManyToOne
     @JoinColumn(name = "customerId")
     private City city;
@@ -48,7 +48,7 @@ public class Customer {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     @Builder.Default
-    private List<CustomerContact> contactsCustomer = new ArrayList<>();;
+    private List<CustomerContact> contactsCustomer = new ArrayList<>();
 
     @Nullable
     @JsonBackReference
@@ -56,11 +56,11 @@ public class Customer {
     @JoinColumn(name = "employeeId")
     private Employee employee;
 
-    @JsonManagedReference
+    @JsonManagedReference("customer-order")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
-    @Builder.Default
-    private List<Order> orders = new ArrayList<>();;
+    private List<Order> orders;
 
-    @OneToOne
+    @JsonManagedReference("customer-user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 }

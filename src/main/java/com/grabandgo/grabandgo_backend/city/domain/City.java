@@ -7,8 +7,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grabandgo.grabandgo_backend.branch.domain.Branch;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.office.domain.Office;
-import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,15 +42,18 @@ public class City {
     @JoinColumn(name = "regionId")
     private Region region;
 
-    @JsonManagedReference
+    @JsonManagedReference("city-customers")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
+    @Nullable
     private List<Customer> customers;
 
-    @JsonManagedReference
+    @JsonManagedReference("city-offices")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
+    @Nullable
     private List<Office> offices;
 
-    @JsonManagedReference
+    @JsonManagedReference("city-branches")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
+    @Nullable
     private List<Branch> branchs;
 }

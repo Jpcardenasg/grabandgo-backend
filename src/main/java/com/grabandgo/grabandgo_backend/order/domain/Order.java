@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pruchase")
+@Table(name = "\"order\"")
 public class Order {
 
     @Id
@@ -39,11 +39,11 @@ public class Order {
     @JoinColumn(name = "orderStatusId")
     private OrderStatus status;
 
-    @JsonManagedReference
+    @JsonManagedReference("order-details")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderDetail> details;
 
-    @JsonBackReference
+    @JsonBackReference("customer-order")
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;

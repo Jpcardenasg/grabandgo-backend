@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.region.application.RegionService;
-import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
 
 @RestController
 @RequestMapping("/api/region")

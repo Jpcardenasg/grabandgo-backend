@@ -3,7 +3,7 @@ package com.grabandgo.grabandgo_backend.country.domain;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

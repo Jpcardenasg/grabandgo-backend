@@ -32,7 +32,7 @@ public class SupplierContact {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "supplierId")
+    @JoinColumn(name = "supplierNit")
     private Supplier supplier;
 
     @JsonBackReference

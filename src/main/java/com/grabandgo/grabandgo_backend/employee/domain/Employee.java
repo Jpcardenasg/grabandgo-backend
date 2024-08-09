@@ -30,11 +30,9 @@ import lombok.NoArgsConstructor;
 public class Employee {
 
     @Id
-    private Long id;
+    private String id;
     private String name;
-    private String lastName1;
-    @Nullable
-    private String lastName2;
+    private String lastName;
     private String email;
     private String extencion;
     @Nullable
@@ -54,6 +52,7 @@ public class Employee {
     @JoinColumn(name = "officeId")
     private Office office;
 
-    @OneToOne
+    @JsonManagedReference("employee-user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private User user;
 }

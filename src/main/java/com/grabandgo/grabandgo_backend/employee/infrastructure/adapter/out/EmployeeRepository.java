@@ -12,7 +12,7 @@ import java.util.List;
  * EmployeeRepository
  */
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, String> {
     List<Employee> findByEmail(String email);
 
     List<Employee> findByEmployees(List<Employee> employees);
@@ -25,9 +25,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     List<Employee> findByName(String name);
 
-    List<Employee> findByLastName1(String lastName1);
-
-    List<Employee> findByLastName2(String lastName2);
+    List<Employee> findByLastName(String lastName);
 
     List<Employee> findByPosition(String position);
 

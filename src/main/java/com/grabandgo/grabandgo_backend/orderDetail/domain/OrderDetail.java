@@ -21,12 +21,12 @@ public class OrderDetail {
     @EmbeddedId
     private ProductOrderPk id;
 
-    @JsonBackReference
+    @JsonBackReference("details-product")
     @ManyToOne
     @JoinColumn(name = "productId", insertable = false, updatable = false)
     private Product product;
-    
-    @JsonBackReference
+
+    @JsonBackReference("order-details")
     @ManyToOne
     @JoinColumn(name = "orderId", insertable = false, updatable = false)
     private Order order;

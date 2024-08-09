@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.grabandgo.grabandgo_backend.region.domain.DTO.Region;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
 import com.grabandgo.grabandgo_backend.region.infrastructure.adapter.out.RegionRepository;
 
 @Service

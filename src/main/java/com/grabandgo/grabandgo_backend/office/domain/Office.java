@@ -37,7 +37,7 @@ public class Office {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "office")
     private List<Employee> employees;
 
-    @JsonBackReference
+    @JsonBackReference("city-offices")
     @ManyToOne
     @JoinColumn(name = "cityId")
     private City city;

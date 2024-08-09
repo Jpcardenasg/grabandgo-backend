@@ -24,10 +24,10 @@ public class Branch {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "supplierId")
+    @JoinColumn(name = "supplierNit")
     private Supplier supplier;
-    
-    @JsonBackReference
+
+    @JsonBackReference("city-branches")
     @ManyToOne
     @JoinColumn(name = "cityId")
     private City city;

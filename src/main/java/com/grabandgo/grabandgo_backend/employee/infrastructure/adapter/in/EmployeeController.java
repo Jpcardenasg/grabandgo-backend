@@ -33,13 +33,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/updateEmployee/{employeeId}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long employeeId, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable String employeeId, @RequestBody Employee employee) {
         service.updateEmployee(employeeId, employee);
         return ResponseEntity.ok(employee);
     }
 
     @DeleteMapping("/deleteEmployee/{employeeId}")
-    public ResponseEntity<Long> deleteEmployee(@PathVariable Long employeeId) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable String employeeId) {
         service.deleteEmployee(employeeId);
         return ResponseEntity.ok(employeeId);
     }
