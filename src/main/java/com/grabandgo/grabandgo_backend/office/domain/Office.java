@@ -33,7 +33,7 @@ public class Office {
     private String address1;
     private String address2;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "employee-office")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "office")
     private List<Employee> employees;
 

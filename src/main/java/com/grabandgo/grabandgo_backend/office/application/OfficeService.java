@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.office.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.office.domain.Office;
 
@@ -16,4 +17,5 @@ public interface OfficeService {
 
     List<Office> findAll();
 
+    Optional<Office> findById(Long id);
 }

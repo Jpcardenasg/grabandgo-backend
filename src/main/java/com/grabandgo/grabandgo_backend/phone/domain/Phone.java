@@ -36,17 +36,17 @@ public class Phone {
     private Long prefix;
     private Long number;
 
-    @JsonBackReference
+    @JsonBackReference(value = "phone-phonetype")
     @ManyToOne
     @JoinColumn(name = "phoneTypeId")
     private PhoneType phoneType;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "contact-phone")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
     @Builder.Default
     private List<CustomerContact> customerContacts = new ArrayList<>();;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "phone-suplppierContact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
     @Builder.Default
     private List<SupplierContact> supplierContacts = new ArrayList<>();;

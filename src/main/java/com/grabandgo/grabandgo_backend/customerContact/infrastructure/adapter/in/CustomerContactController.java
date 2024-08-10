@@ -47,4 +47,8 @@ public class CustomerContactController {
         return ResponseEntity.ok(service.findAll());
     }
 
+    @GetMapping("/getCustomerContact/{id}")
+    public ResponseEntity<CustomerContact> getCustomerContactByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }

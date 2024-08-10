@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.city.application.CityService;
 import com.grabandgo.grabandgo_backend.city.domain.City;
 
@@ -47,5 +48,10 @@ public class CityController {
     @GetMapping("/allCities")
     public ResponseEntity<List<City>> findAll() {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/getCity/{id}")
+    public ResponseEntity<City> getCityByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
     }
 }

@@ -29,7 +29,7 @@ public class ProductGamma {
     private String htmlDescription;
     private String image;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "productGamma-product")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productGamma")
     List<Product> products;
 }

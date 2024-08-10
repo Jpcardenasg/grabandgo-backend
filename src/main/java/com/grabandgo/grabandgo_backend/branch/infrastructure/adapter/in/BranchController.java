@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * BranchAdapter
@@ -49,5 +51,11 @@ public class BranchController {
     public ResponseEntity<List<Branch>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/getBranch/{id}")
+    public ResponseEntity<Branch> getBranchByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
+    }
+    
 
 }

@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.customerContact.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class CustomerContactServiceImp implements CustomerContactService {
         } else {
             throw new RuntimeException("customerContact not found with id: " + id);
         }
+    }
+
+    @Override
+    public Optional<CustomerContact> findById(Long id) {
+        return customerContactRepository.findById(id);
     }
 }

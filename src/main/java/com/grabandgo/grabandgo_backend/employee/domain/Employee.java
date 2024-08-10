@@ -38,16 +38,16 @@ public class Employee {
     @Nullable
     private String position;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "employee-boss")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "boss")
     private List<Employee> employees;
 
-    @JsonBackReference
+    @JsonBackReference(value = "employee-boss")
     @ManyToOne
     @JoinColumn(name = "employeeId")
     private Employee boss;
 
-    @JsonBackReference
+    @JsonBackReference(value = "employee-office")
     @ManyToOne
     @JoinColumn(name = "officeId")
     private Office office;

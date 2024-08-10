@@ -48,4 +48,9 @@ public class CountryController {
     public ResponseEntity<List<Country>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/getCountry/{id}")
+    public ResponseEntity<Country> getCountryByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }

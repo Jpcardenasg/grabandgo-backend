@@ -40,23 +40,23 @@ public class Customer {
 
     private String postalCode;
 
-    @JsonBackReference("city-customers")
+    @JsonBackReference(value = "city-customers")
     @ManyToOne
     @JoinColumn(name = "customerId")
     private City city;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "customers-contact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     @Builder.Default
     private List<CustomerContact> contactsCustomer = new ArrayList<>();
 
     @Nullable
-    @JsonBackReference
+    @JsonBackReference(value = "employee-customer")
     @ManyToOne
     @JoinColumn(name = "employeeId")
     private Employee employee;
 
-    @JsonManagedReference("customer-order")
+    @JsonManagedReference(value = "customer-order")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     private List<Order> orders;
 

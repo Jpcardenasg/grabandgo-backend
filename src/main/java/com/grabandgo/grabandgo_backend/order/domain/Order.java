@@ -34,7 +34,7 @@ public class Order {
     private Date shippingDate;
     private Date estimatedDelieryDate;
 
-    @JsonBackReference
+    @JsonBackReference(value = "oderstastus-order")
     @ManyToOne
     @JoinColumn(name = "orderStatusId")
     private OrderStatus status;
@@ -43,7 +43,7 @@ public class Order {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     private List<OrderDetail> details;
 
-    @JsonBackReference("customer-order")
+    @JsonBackReference(value = "customer-order")
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;

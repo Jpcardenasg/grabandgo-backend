@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.branch.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class BranchServiceImp implements BranchService {
         } else {
             throw new RuntimeException("branch not found with id: " + id);
         }
+    }
+
+    @Override
+    public Optional<Branch> findById(Long id) {
+        return branchRepository.findById(id);
     }
 
 }

@@ -48,4 +48,9 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/getEmployee/{id}")
+    public ResponseEntity<Employee> getEmployeeByid(@PathVariable String id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }

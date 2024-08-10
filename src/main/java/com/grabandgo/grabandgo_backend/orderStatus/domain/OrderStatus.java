@@ -26,7 +26,7 @@ public class OrderStatus {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "oderstastus-order")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "status")
     private List<Order> orders;
 

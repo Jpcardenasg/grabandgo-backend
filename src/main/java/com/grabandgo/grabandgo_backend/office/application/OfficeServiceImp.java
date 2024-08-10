@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.office.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class OfficeServiceImp implements OfficeService {
         } else {
             throw new RuntimeException("office not found with id: " + id);
         }
+    }
+
+    @Override
+    public Optional<Office> findById(Long id) {
+        return officeRepository.findById(id);
     }
 }

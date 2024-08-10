@@ -22,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.val;
 
 /**
  * City
@@ -37,22 +38,22 @@ public class City {
     private Long id;
     private String name;
 
-    @JsonBackReference
+    @JsonBackReference(value = "region-city")
     @ManyToOne
     @JoinColumn(name = "regionId")
     private Region region;
 
-    @JsonManagedReference("city-customers")
+    @JsonManagedReference(value = "city-customers")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
     private List<Customer> customers;
 
-    @JsonManagedReference("city-offices")
+    @JsonManagedReference(value = "city-offices")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
     private List<Office> offices;
 
-    @JsonManagedReference("city-branches")
+    @JsonManagedReference(value = "city-branches")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
     private List<Branch> branchs;

@@ -47,4 +47,9 @@ public class InventoryController {
     public ResponseEntity<List<Inventory>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/getInvetory/{id}")
+    public ResponseEntity<Inventory> getInvetoryByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }

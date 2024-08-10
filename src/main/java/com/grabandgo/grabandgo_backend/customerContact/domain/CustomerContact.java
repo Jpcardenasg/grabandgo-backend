@@ -30,12 +30,12 @@ public class CustomerContact {
     private Long id;
     private String email;
 
-    @JsonBackReference
+    @JsonBackReference(value = "customers-contact")
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @JsonBackReference
+    @JsonBackReference(value = "contact-phone")
     @ManyToOne
     @JoinColumn(name = "phoneId")
     private Phone phone;

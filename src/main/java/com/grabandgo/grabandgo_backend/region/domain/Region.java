@@ -31,12 +31,12 @@ public class Region {
     private Long id;
     private String name;
 
-    @JsonBackReference
+    @JsonBackReference(value = "country-region")
     @ManyToOne
     @JoinColumn(name = "countryId")
     private Country country;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "region-city")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "region")
     private List<City> cities;
 

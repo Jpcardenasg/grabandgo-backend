@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.city.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
 
@@ -16,4 +17,6 @@ public interface CityService {
     void deleteCity(Long id);
 
     List<City> findAll();
+
+    Optional<City> findById(Long id);
 }

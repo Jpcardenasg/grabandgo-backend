@@ -48,4 +48,9 @@ public class OfficeController {
     public ResponseEntity<List<Office>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
+
+    @GetMapping("/getOffice/{id}")
+    public ResponseEntity<Office> getOfficeByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }

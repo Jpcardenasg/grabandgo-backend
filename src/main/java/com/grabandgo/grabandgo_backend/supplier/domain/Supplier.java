@@ -24,7 +24,7 @@ public class Supplier {
     private String nit;
     private String name;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "supplier-suplppierContact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "supplier")
     private List<SupplierContact> supplierContacts;
 }

@@ -30,7 +30,7 @@ public class Country {
     private Long id;
     private String name;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "country-region")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "country")
     private List<Region> regions;
 }

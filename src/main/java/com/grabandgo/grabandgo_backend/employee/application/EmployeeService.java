@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.employee.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 
@@ -16,4 +17,5 @@ public interface EmployeeService {
 
     List<Employee> findAll();
 
+    Optional<Employee> findById(String id);
 }

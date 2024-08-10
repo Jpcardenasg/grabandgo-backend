@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.city.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class CityServiceImp implements CityService {
         } else {
             throw new RuntimeException("city not found with id: " + id);
         }
+    }
+
+    @Override
+    public Optional<City> findById(Long id){
+        return cityRepository.findById(id);
     }
 }

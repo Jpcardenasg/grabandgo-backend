@@ -47,4 +47,5 @@ public class OrderDetailController {
     public ResponseEntity<List<OrderDetail>> findAll() {
         return ResponseEntity.ok(service.fetchOrderDetailsList());
     }
+
 }

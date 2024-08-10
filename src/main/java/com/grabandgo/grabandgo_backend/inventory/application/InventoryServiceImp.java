@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.inventory.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,11 @@ public class InventoryServiceImp implements InventoryService{
     @Override
     public List<Inventory> findAll() {
         return inventoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<Inventory> findById(Long id) {
+        return inventoryRepository.findById(id);
     }
 
     

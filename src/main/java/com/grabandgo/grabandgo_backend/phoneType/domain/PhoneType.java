@@ -27,7 +27,7 @@ public class PhoneType {
     private Long id;
     private String phoneType;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "phone-phonetype")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phoneType")
     private List<Phone> phones;
 }

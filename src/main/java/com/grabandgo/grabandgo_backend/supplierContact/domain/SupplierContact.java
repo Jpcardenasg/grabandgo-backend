@@ -30,12 +30,12 @@ public class SupplierContact {
     private String lastName;
     private String email;
 
-    @JsonBackReference
+    @JsonBackReference(value = "supplier-suplppierContact")
     @ManyToOne
     @JoinColumn(name = "supplierNit")
     private Supplier supplier;
 
-    @JsonBackReference
+    @JsonBackReference(value = "phone-suplppierContact")
     @ManyToOne
     @JoinColumn(name = "phoneId")
     private Phone phone;

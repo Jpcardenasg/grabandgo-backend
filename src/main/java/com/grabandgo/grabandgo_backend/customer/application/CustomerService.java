@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.customer.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 
@@ -12,7 +13,7 @@ public interface CustomerService {
 
     void deleteCustomer(String id);
 
-    Customer getCustomerById(String id);
+    Optional<Customer> findById(String id);
 
     List<Customer> fetchCustomersList();
 

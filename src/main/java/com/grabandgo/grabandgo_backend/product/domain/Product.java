@@ -35,7 +35,7 @@ public class Product {
     private Double sellPrice;
     private Double supplierPrice;
 
-    @JsonBackReference
+    @JsonBackReference(value = "productGamma-product")
     @ManyToOne
     @JoinColumn(name = "productGamaId")
     private ProductGamma productGamma;

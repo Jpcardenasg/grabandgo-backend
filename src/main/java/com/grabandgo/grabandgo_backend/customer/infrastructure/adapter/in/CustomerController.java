@@ -45,4 +45,9 @@ public class CustomerController {
     public ResponseEntity<List<Customer>> findAll() {
         return ResponseEntity.ok(service.fetchCustomersList());
     }
+
+    @GetMapping("/getCustomer/{id}")
+    public ResponseEntity<Customer> getCustomerByid(@PathVariable String id) {
+        return ResponseEntity.of(service.findById(id));
+    }
 }
