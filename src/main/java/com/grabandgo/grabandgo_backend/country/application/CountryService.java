@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.country.domain.Country;
+import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 
 /**
  * CountryService
@@ -20,4 +21,5 @@ public interface CountryService {
 
     Optional<Country> findById(Long id);
 
+    List<CountryDTO> findAllView();
 }

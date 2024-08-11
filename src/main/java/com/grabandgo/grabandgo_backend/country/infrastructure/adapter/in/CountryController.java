@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.country.application.CountryService;
 import com.grabandgo.grabandgo_backend.country.domain.Country;
+import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 
 /**
  * CountryAdapter
@@ -52,6 +53,11 @@ public class CountryController {
     @GetMapping("/allCountries")
     public ResponseEntity<List<Country>> findAll() {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/allCountriesView")
+    public ResponseEntity<List<CountryDTO>> findAllLogOut() {
+        return ResponseEntity.ok(service.findAllView());
     }
 
     @GetMapping("/getCountry/{id}")

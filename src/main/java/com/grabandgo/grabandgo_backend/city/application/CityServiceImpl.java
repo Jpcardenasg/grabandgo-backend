@@ -2,15 +2,16 @@ package com.grabandgo.grabandgo_backend.city.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.city.domain.DTO.CityDTO;
 import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
 
 import jakarta.transaction.Transactional;
-
 
 /**
  * CityServiceImpl
@@ -54,5 +55,14 @@ public class CityServiceImpl implements CityService {
     @Override
     public Optional<City> findById(Long id) {
         return cityRepository.findById(id);
+    }
+
+    @Override
+    public List<CityDTO> findAllView() {
+        return cityRepository.findAll().stream().map(this::cityToDto).collect(Collectors.toList());
+    }
+
+    private CityDTO cityToDto(City city) {
+        return new CityDTO().builder().id(city.getId()).name(city.getName()).regionId(city.getRegion().getId()).build();
     }
 }

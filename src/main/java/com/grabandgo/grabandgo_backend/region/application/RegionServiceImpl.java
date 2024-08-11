@@ -1,10 +1,13 @@
 package com.grabandgo.grabandgo_backend.region.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.region.domain.Region;
+import com.grabandgo.grabandgo_backend.region.domain.DTO.RegionDTO;
 import com.grabandgo.grabandgo_backend.region.infrastructure.adapter.out.RegionRepository;
 
 import jakarta.transaction.Transactional;
@@ -48,6 +51,17 @@ public class RegionServiceImpl implements RegionService {
     @Override
     public List<Region> fetchRegionsList() {
         return regionRepository.findAll();
+    }
+
+    @Transactional
+    @Override
+    public List<RegionDTO> fetchRegionsListView() {
+        return regionRepository.findAll().stream().map(this::regionToDto).collect(Collectors.toList());
+    }
+
+    private RegionDTO regionToDto(Region region) {
+        return new RegionDTO().builder().id(region.getId()).countryId(region.getCountry().getId())
+                .name(region.getName()).build();
     }
 
 }

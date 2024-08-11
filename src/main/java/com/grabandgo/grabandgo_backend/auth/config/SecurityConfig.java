@@ -31,9 +31,9 @@ public class SecurityConfig {
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authRequest -> authRequest
 						.requestMatchers("/auth/**").permitAll()
-						.requestMatchers("/api/region/allRegions").permitAll()
-						.requestMatchers("/api/country/allCountries").permitAll()
-						.requestMatchers("/api/city/allCities").permitAll()
+						.requestMatchers("/api/region/allRegionsView").permitAll()
+						.requestMatchers("/api/country/allCountriesView").permitAll()
+						.requestMatchers("/api/city/allCitiesView").permitAll()
 						.anyRequest().authenticated())
 				.sessionManagement(sessionManager -> sessionManager
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

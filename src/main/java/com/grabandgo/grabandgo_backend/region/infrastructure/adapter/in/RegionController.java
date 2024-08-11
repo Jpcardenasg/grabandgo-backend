@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.region.application.RegionService;
 import com.grabandgo.grabandgo_backend.region.domain.Region;
+import com.grabandgo.grabandgo_backend.region.domain.DTO.RegionDTO;
 
 @Validated
 @RestController
@@ -49,5 +50,10 @@ public class RegionController {
     @GetMapping("/allRegions")
     public ResponseEntity<List<Region>> findAll() {
         return ResponseEntity.ok(service.fetchRegionsList());
+    }
+
+    @GetMapping("/allRegionsView")
+    public ResponseEntity<List<RegionDTO>> findAllView() {
+        return ResponseEntity.ok(service.fetchRegionsListView());
     }
 }

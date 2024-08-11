@@ -2,14 +2,17 @@ package com.grabandgo.grabandgo_backend.country.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.country.domain.Country;
+import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 import com.grabandgo.grabandgo_backend.country.infrastructure.adapter.out.CountryRepository;
 
 import jakarta.transaction.Transactional;
+
 /**
  * CountryServiceImpl
  */
@@ -51,5 +54,14 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public Optional<Country> findById(Long id) {
         return countryRepository.findById(id);
+    }
+
+    @Override
+    public List<CountryDTO> findAllView() {
+        return countryRepository.findAll().stream().map(this::countryToDto).collect(Collectors.toList());
+    }
+
+    private CountryDTO countryToDto(Country country) {
+        return new CountryDTO().builder().id(country.getId()).name(country.getName()).build();
     }
 }
