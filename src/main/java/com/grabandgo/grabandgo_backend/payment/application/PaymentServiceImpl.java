@@ -1,6 +1,8 @@
 package com.grabandgo.grabandgo_backend.payment.application;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Transactional
     @Override
-    public Payment getPaymentById(Long id) {
-        return paymentRepository.findById(id).orElse(null);
+    public Optional<Payment> getPaymentById(Long id) {
+        return paymentRepository.findById(id);
     }
 
     @Transactional
