@@ -30,9 +30,9 @@ public class Order {
 
     @Id
     private Long id;
-    private Date oderDate;
+    private Date orderDate;
     private Date shippingDate;
-    private Date estimatedDelieryDate;
+    private Date estimatedDeliveryDate;
 
     @JsonBackReference(value = "oderstastus-order")
     @ManyToOne
