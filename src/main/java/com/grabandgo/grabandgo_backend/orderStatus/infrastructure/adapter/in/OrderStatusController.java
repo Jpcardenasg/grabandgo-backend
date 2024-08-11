@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.orderStatus.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.orderStatus.application.OrderStatusService;
 import com.grabandgo.grabandgo_backend.orderStatus.domain.OrderStatus;
 
+@Validated
 @RestController
 @RequestMapping("/api/orderStatus")
 public class OrderStatusController {
@@ -24,14 +29,14 @@ public class OrderStatusController {
     private OrderStatusService service;
 
     @PostMapping("/saveOrderStatus")
-    public ResponseEntity<OrderStatus> saveOrderStatus(@RequestBody OrderStatus orderStatus) {
+    public ResponseEntity<OrderStatus> saveOrderStatus(@Valid @RequestBody OrderStatus orderStatus) {
         service.saveOrderStatus(orderStatus);
         return ResponseEntity.ok(orderStatus);
     }
 
     @PutMapping("/updateOrderStatus/{orderStatusId}")
     public ResponseEntity<OrderStatus> updateOrderStatus(@PathVariable Long orderStatusId,
-            @RequestBody OrderStatus orderStatus) {
+            @Valid @RequestBody OrderStatus orderStatus) {
         service.updateOrderStatus(orderStatusId, orderStatus);
         return ResponseEntity.ok(orderStatus);
     }

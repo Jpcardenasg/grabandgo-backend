@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.phoneType.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.phoneType.application.PhoneTypeService;
 import com.grabandgo.grabandgo_backend.phoneType.domain.PhoneType;
 
+@Validated
 @RestController
 @RequestMapping("/api/phoneType")
 public class PhoneTypeController {
@@ -24,13 +29,14 @@ public class PhoneTypeController {
     private PhoneTypeService service;
 
     @PostMapping("/savePhoneType")
-    public ResponseEntity<PhoneType> savePhoneType(@RequestBody PhoneType phoneType) {
+    public ResponseEntity<PhoneType> savePhoneType(@Valid @RequestBody PhoneType phoneType) {
         service.savePhoneType(phoneType);
         return ResponseEntity.ok(phoneType);
     }
 
     @PutMapping("/updatePhoneType/{phoneTypeId}")
-    public ResponseEntity<PhoneType> updatePhoneType(@PathVariable Long phoneTypeId, @RequestBody PhoneType phoneType) {
+    public ResponseEntity<PhoneType> updatePhoneType(@PathVariable Long phoneTypeId,
+            @Valid @RequestBody PhoneType phoneType) {
         service.updatePhoneType(phoneTypeId, phoneType);
         return ResponseEntity.ok(phoneType);
     }

@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.order.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.order.application.OrderService;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
@@ -17,18 +22,20 @@ import com.grabandgo.grabandgo_backend.order.domain.Order;
 /**
  * OrderAdapter
  */
+@Validated
+@RestController
 public class OrderController {
     @Autowired
     private OrderService service;
 
     @PostMapping("/saveOrder")
-    public ResponseEntity<Order> saveOrder(@RequestBody Order order) {
+    public ResponseEntity<Order> saveOrder(@Valid @RequestBody Order order) {
         service.saveOrder(order);
         return ResponseEntity.ok(order);
     }
 
     @PutMapping("/updateOrder/{orderId}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long orderId, @RequestBody Order order) {
+    public ResponseEntity<Order> updateOrder(@PathVariable Long orderId, @Valid @RequestBody Order order) {
         service.updateOrder(orderId, order);
         return ResponseEntity.ok(order);
     }

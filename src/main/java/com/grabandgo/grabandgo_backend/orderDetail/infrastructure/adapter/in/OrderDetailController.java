@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.orderDetail.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +21,7 @@ import com.grabandgo.grabandgo_backend.orderDetail.application.OrderDetailServic
 import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.ProductOrderPk;
 
+@Validated
 @RestController
 @RequestMapping("/api/orderDetail")
 public class OrderDetailController {
@@ -25,14 +30,14 @@ public class OrderDetailController {
     private OrderDetailService service;
 
     @PostMapping("/saveOrderDetail")
-    public ResponseEntity<OrderDetail> saveOrderDetail(@RequestBody OrderDetail orderDetail) {
+    public ResponseEntity<OrderDetail> saveOrderDetail(@Valid @RequestBody OrderDetail orderDetail) {
         service.saveOrderDetail(orderDetail);
         return ResponseEntity.ok(orderDetail);
     }
 
     @PutMapping("/updateOrderDetail/{orderDetailId}")
     public ResponseEntity<OrderDetail> updateOrderDetail(@PathVariable ProductOrderPk orderDetailId,
-            @RequestBody OrderDetail orderDetail) {
+            @Valid @RequestBody OrderDetail orderDetail) {
         service.updateOrderDetail(orderDetailId, orderDetail);
         return ResponseEntity.ok(orderDetail);
     }

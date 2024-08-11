@@ -1,6 +1,11 @@
 package com.grabandgo.grabandgo_backend.product.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.product.application.ProductService;
 import com.grabandgo.grabandgo_backend.product.domain.Product;
 
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Validated
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
@@ -24,13 +32,13 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/saveProduct")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product) {
         service.saveProduct(product);
         return ResponseEntity.ok(product);
     }
 
     @PutMapping("/updateProduct/{productId}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @Valid @RequestBody Product product) {
         service.updateProduct(productId, product);
         return ResponseEntity.ok(product);
     }
@@ -45,4 +53,10 @@ public class ProductController {
     public ResponseEntity<List<Product>> findAll() {
         return ResponseEntity.ok(service.fetchProductsList());
     }
+
+    @GetMapping("/getProduct/{id}")
+    public ResponseEntity<Optional<Product>> getMethodName(@RequestParam Long id) {
+        return ResponseEntity.ok(service.getProductById(id));
+    }
+
 }

@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.supplier.domain;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grabandgo.grabandgo_backend.product.domain.Product;
 import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
 import jakarta.persistence.CascadeType;
@@ -27,4 +28,8 @@ public class Supplier {
     @JsonManagedReference(value = "supplier-suplppierContact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "supplier")
     private List<SupplierContact> supplierContacts;
+
+    @JsonManagedReference(value = "supplier-product")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "supplier")
+    private List<Product> products;
 }

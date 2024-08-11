@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.inventory.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
 /**
  * InventaryAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
@@ -26,13 +31,14 @@ public class InventoryController {
     private InventoryService service;
 
     @PostMapping("/saveInventory")
-    public ResponseEntity<Inventory> saveInventory(@RequestBody Inventory inventory) {
+    public ResponseEntity<Inventory> saveInventory(@Valid @RequestBody Inventory inventory) {
         service.saveInventory(inventory);
         return ResponseEntity.ok(inventory);
     }
 
     @PutMapping("/updateInventory/{inventoryId}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable Long inventoryId, @RequestBody Inventory inventory) {
+    public ResponseEntity<Inventory> updateInventory(@PathVariable Long inventoryId,
+            @Valid @RequestBody Inventory inventory) {
         service.updateInventory(inventoryId, inventory);
         return ResponseEntity.ok(inventory);
     }

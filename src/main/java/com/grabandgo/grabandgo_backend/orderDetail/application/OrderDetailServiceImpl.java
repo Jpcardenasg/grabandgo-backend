@@ -7,17 +7,21 @@ import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.ProductOrderPk;
 import com.grabandgo.grabandgo_backend.orderDetail.infrastructure.adapter.out.OrderDetailRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
+    @Transactional
     @Override
     public OrderDetail saveOrderDetail(OrderDetail orderDetail) {
         return orderDetailRepository.save(orderDetail);
     }
 
+    @Transactional
     @Override
     public OrderDetail updateOrderDetail(ProductOrderPk id, OrderDetail orderDetail) {
         if (orderDetailRepository.existsById(id)) {
@@ -28,16 +32,19 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
     }
 
+    @Transactional
     @Override
     public void deleteOrderDetail(ProductOrderPk id) {
         orderDetailRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<OrderDetail> fetchOrderDetailsList() {
         return orderDetailRepository.findAll();
     }
 
+    @Transactional
     @Override
     public OrderDetail getOrderDetailById(ProductOrderPk id) {
         return orderDetailRepository.findById(id).orElse(null);

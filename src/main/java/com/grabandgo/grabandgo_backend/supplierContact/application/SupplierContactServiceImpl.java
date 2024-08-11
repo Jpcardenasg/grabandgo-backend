@@ -8,30 +8,36 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 import com.grabandgo.grabandgo_backend.supplierContact.infrastructure.adapter.out.SupplierContactRepository;
 
+import jakarta.transaction.Transactional;
+
 /**
  * SupplierContactService
  */
 @Service
-public class SupplierContactServiceImp implements SupplierContactService {
+public class SupplierContactServiceImpl implements SupplierContactService {
 
     @Autowired
     private SupplierContactRepository supplierContactRepository;
 
+    @Transactional
     @Override
     public void deleteSupplierContact(Long id) {
         supplierContactRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<SupplierContact> findAll() {
         return supplierContactRepository.findAll();
     }
 
+    @Transactional
     @Override
     public SupplierContact saveSupplierContact(SupplierContact supplierContact) {
         return supplierContactRepository.save(supplierContact);
     }
 
+    @Transactional
     @Override
     public SupplierContact updateSupplierContact(Long id, SupplierContact supplierContact) {
         if (supplierContactRepository.existsById(id)) {

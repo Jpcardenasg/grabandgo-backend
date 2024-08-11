@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.productGamma.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.productGamma.application.ProductGammaService;
 import com.grabandgo.grabandgo_backend.productGamma.domain.ProductGamma;
 
+@Validated
 @RestController
 @RequestMapping("/api/productGamma")
 public class ProductGammaController {
@@ -24,14 +29,14 @@ public class ProductGammaController {
     private ProductGammaService service;
 
     @PostMapping("/saveProductGamma")
-    public ResponseEntity<ProductGamma> saveProductGamma(@RequestBody ProductGamma productGamma) {
+    public ResponseEntity<ProductGamma> saveProductGamma(@Valid @RequestBody ProductGamma productGamma) {
         service.saveProductGamma(productGamma);
         return ResponseEntity.ok(productGamma);
     }
 
     @PutMapping("/updateProductGamma/{productGammaId}")
     public ResponseEntity<ProductGamma> updateProductGamma(@PathVariable Long productGammaId,
-            @RequestBody ProductGamma productGamma) {
+            @Valid @RequestBody ProductGamma productGamma) {
         service.updateProductGamma(productGammaId, productGamma);
         return ResponseEntity.ok(productGamma);
     }

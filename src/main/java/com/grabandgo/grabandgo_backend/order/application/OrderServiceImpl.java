@@ -8,26 +8,32 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
 import com.grabandgo.grabandgo_backend.order.infrastructure.adapter.out.OrderRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
-public class OrderServiceImp implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Transactional
     @Override
     public void deleteOrder(Long id) {
         orderRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
     }
 
+    @Transactional
     @Override
     public Order updateOrder(Long id, Order order) {
         if (orderRepository.existsById(id)) {

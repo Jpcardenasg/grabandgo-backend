@@ -9,29 +9,35 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.office.domain.Office;
 import com.grabandgo.grabandgo_backend.office.infrastructure.adapter.out.OfficeRepository;
 
+import jakarta.transaction.Transactional;
+
 /**
- * OfficeServiceImp
+ * OfficeServiceImpl
  */
 @Service
-public class OfficeServiceImp implements OfficeService {
+public class OfficeServiceImpl implements OfficeService {
     @Autowired
     private OfficeRepository officeRepository;
 
+    @Transactional
     @Override
     public void deleteOffice(Long id) {
         officeRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<Office> findAll() {
         return officeRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Office saveOffice(Office office) {
         return officeRepository.save(office);
     }
 
+    @Transactional
     @Override
     public Office updateOffice(Long id, Office office) {
         if (officeRepository.existsById(id)) {
@@ -42,6 +48,7 @@ public class OfficeServiceImp implements OfficeService {
         }
     }
 
+    @Transactional
     @Override
     public Optional<Office> findById(Long id) {
         return officeRepository.findById(id);

@@ -1,6 +1,11 @@
 package com.grabandgo.grabandgo_backend.supplier.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.supplier.application.SupplierService;
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 
+@Validated
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierController {
@@ -24,13 +30,14 @@ public class SupplierController {
     private SupplierService service;
 
     @PostMapping("/saveSupplier")
-    public ResponseEntity<Supplier> saveSupplier(@RequestBody Supplier supplier) {
+    public ResponseEntity<Supplier> saveSupplier(@Valid @RequestBody Supplier supplier) {
         service.saveSupplier(supplier);
         return ResponseEntity.ok(supplier);
     }
 
     @PutMapping("/updateSupplier/{supplierId}")
-    public ResponseEntity<Supplier> updateSupplier(@PathVariable String supplierId, @RequestBody Supplier supplier) {
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable String supplierId,
+            @Valid @RequestBody Supplier supplier) {
         service.updateSupplier(supplierId, supplier);
         return ResponseEntity.ok(supplier);
     }
@@ -45,4 +52,10 @@ public class SupplierController {
     public ResponseEntity<List<Supplier>> findAll() {
         return ResponseEntity.ok(service.fetchSuppliersList());
     }
+
+    @GetMapping("/getSupplier/{}")
+    public ResponseEntity<Optional<Supplier>> getSupplierByNit(@PathVariable String nit) {
+        return ResponseEntity.ok(service.getSupplierById(nit));
+    }
+
 }

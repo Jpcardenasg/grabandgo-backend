@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.city.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.city.application.CityService;
-import com.grabandgo.grabandgo_backend.city.domain.City;
 
 /**
  * CityAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/city")
 public class CityController {
@@ -28,13 +32,13 @@ public class CityController {
     private CityService service;
 
     @PostMapping("/saveCity")
-    public ResponseEntity<City> saveCity(@RequestBody City city) {
+    public ResponseEntity<City> saveCity(@Valid @RequestBody City city) {
         service.saveCity(city);
         return ResponseEntity.ok(city);
     }
 
     @PutMapping("/updateCity/{cityId}")
-    public ResponseEntity<City> updateCity(@PathVariable Long cityId, @RequestBody City city) {
+    public ResponseEntity<City> updateCity(@PathVariable Long cityId, @Valid @RequestBody City city) {
         service.updateCity(cityId, city);
         return ResponseEntity.ok(city);
     }

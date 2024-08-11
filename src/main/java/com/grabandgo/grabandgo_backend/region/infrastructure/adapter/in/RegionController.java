@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.region.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.region.application.RegionService;
 import com.grabandgo.grabandgo_backend.region.domain.Region;
 
+@Validated
 @RestController
 @RequestMapping("/api/region")
 public class RegionController {
@@ -24,13 +29,13 @@ public class RegionController {
     private RegionService service;
 
     @PostMapping("/saveRegion")
-    public ResponseEntity<Region> saveRegion(@RequestBody Region region) {
+    public ResponseEntity<Region> saveRegion(@Valid @RequestBody Region region) {
         service.saveRegion(region);
         return ResponseEntity.ok(region);
     }
 
     @PutMapping("/updateRegion/{regionId}")
-    public ResponseEntity<Region> updateRegion(@PathVariable Long regionId, @RequestBody Region region) {
+    public ResponseEntity<Region> updateRegion(@PathVariable Long regionId, @Valid @RequestBody Region region) {
         service.updateRegion(regionId, region);
         return ResponseEntity.ok(region);
     }

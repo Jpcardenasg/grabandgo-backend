@@ -40,7 +40,7 @@ public class Product {
     @JoinColumn(name = "productGamaId")
     private ProductGamma productGamma;
 
-    @JsonBackReference
+    @JsonBackReference(value = "supplier-product")
     @ManyToOne
     @JoinColumn(name = "supplierNit")
     private Supplier supplier;
@@ -49,5 +49,4 @@ public class Product {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @Nullable
     private List<OrderDetail> details;
-
 }

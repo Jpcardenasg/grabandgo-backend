@@ -9,30 +9,37 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
 
+import jakarta.transaction.Transactional;
+
+
 /**
- * CityServiceImp
+ * CityServiceImpl
  */
 @Service
-public class CityServiceImp implements CityService {
+public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityRepository cityRepository;
 
+    @Transactional
     @Override
     public void deleteCity(Long id) {
         cityRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<City> findAll() {
         return cityRepository.findAll();
     }
 
+    @Transactional
     @Override
     public City saveCity(City city) {
         return cityRepository.save(city);
     }
 
+    @Transactional
     @Override
     public City updateCity(Long id, City city) {
         if (cityRepository.existsById(id)) {
@@ -43,8 +50,9 @@ public class CityServiceImp implements CityService {
         }
     }
 
+    @Transactional
     @Override
-    public Optional<City> findById(Long id){
+    public Optional<City> findById(Long id) {
         return cityRepository.findById(id);
     }
 }

@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.office.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.office.domain.Office;
 /**
  * OfficeAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/office")
 public class OfficeController {
@@ -27,13 +32,13 @@ public class OfficeController {
     private OfficeService service;
 
     @PostMapping("/saveOffice")
-    public ResponseEntity<Office> saveOffice(@RequestBody Office office) {
+    public ResponseEntity<Office> saveOffice(@Valid @RequestBody Office office) {
         service.saveOffice(office);
         return ResponseEntity.ok(office);
     }
 
     @PutMapping("/updateOffice/{officeId}")
-    public ResponseEntity<Office> updateOffice(@PathVariable Long officeId, @RequestBody Office office) {
+    public ResponseEntity<Office> updateOffice(@PathVariable Long officeId, @Valid @RequestBody Office office) {
         service.updateOffice(officeId, office);
         return ResponseEntity.ok(office);
     }

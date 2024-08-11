@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.user.infrastructure.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.user.domain.User;
 /**
  * UserController
  */
+@Validated
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -27,14 +32,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/saveUser")
-    public ResponseEntity<User> saveUser(@RequestBody User user) {
+    public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
         userService.saveUser(user);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/updateUser/{UserId}")
     public ResponseEntity<User> updateUser(@PathVariable Long userId,
-            @RequestBody User user) {
+            @Valid @RequestBody User user) {
         userService.updateUser(userId, user);
         return ResponseEntity.ok(user);
     }

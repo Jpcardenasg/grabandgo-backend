@@ -9,30 +9,36 @@ import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.out.CustomerContactRepository;
 
+import jakarta.transaction.Transactional;
+
 /**
- * CustomerContactServiceImp
+ * CustomerContactServiceImpl
  */
 @Service
-public class CustomerContactServiceImp implements CustomerContactService {
+public class CustomerContactServiceImpl implements CustomerContactService {
 
     @Autowired
     private CustomerContactRepository customerContactRepository;
 
+    @Transactional
     @Override
     public void deleteCustomerContact(Long id) {
         customerContactRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<CustomerContact> findAll() {
         return customerContactRepository.findAll();
     }
 
+    @Transactional
     @Override
     public CustomerContact saveCustomerContact(CustomerContact customerContact) {
         return customerContactRepository.save(customerContact);
     }
 
+    @Transactional
     @Override
     public CustomerContact updateCustomerContact(Long id, CustomerContact customerContact) {
         if (customerContactRepository.existsById(id)) {
@@ -43,6 +49,7 @@ public class CustomerContactServiceImp implements CustomerContactService {
         }
     }
 
+    @Transactional
     @Override
     public Optional<CustomerContact> findById(Long id) {
         return customerContactRepository.findById(id);

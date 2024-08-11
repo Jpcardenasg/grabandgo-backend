@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +22,21 @@ import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
 /**
  * ContactAdapter
  */
+@Validated
 @RestController
 public class CustomerContactController {
     @Autowired
     private CustomerContactService service;
 
     @PostMapping("/savecustomerContact")
-    public ResponseEntity<CustomerContact> saveCustomerContact(@RequestBody CustomerContact customerContact) {
+    public ResponseEntity<CustomerContact> saveCustomerContact(@Valid @RequestBody CustomerContact customerContact) {
         service.saveCustomerContact(customerContact);
         return ResponseEntity.ok(customerContact);
     }
 
     @PutMapping("/updateCustomerContact/{customerContactId}")
     public ResponseEntity<CustomerContact> updateCustomerContact(@PathVariable Long customerContactId,
-            @RequestBody CustomerContact customerContact) {
+            @Valid @RequestBody CustomerContact customerContact) {
         service.updateCustomerContact(customerContactId, customerContact);
         return ResponseEntity.ok(customerContact);
     }

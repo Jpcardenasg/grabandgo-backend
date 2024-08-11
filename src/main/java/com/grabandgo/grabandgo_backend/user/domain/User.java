@@ -22,6 +22,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -57,36 +58,43 @@ public class User implements UserDetails {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
+    @Transactional
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @Transactional
     @Override
     public String getPassword() {
         return this.password;
     }
 
+    @Transactional
     @Override
     public String getUsername() {
         return this.username;
     }
 
+    @Transactional
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean isEnabled() {
         return true;

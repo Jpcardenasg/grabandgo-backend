@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.customer.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.customer.application.CustomerService;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 
+@Validated
 @RestController
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -24,13 +29,14 @@ public class CustomerController {
     private CustomerService service;
 
     @PostMapping("/saveCustomer")
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) {
         service.saveCustomer(customer);
         return ResponseEntity.ok(customer);
     }
 
     @PutMapping("/updateCustomer/{customerId}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable String customerId, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable String customerId,
+            @Valid @RequestBody Customer customer) {
         service.updateCustomer(customerId, customer);
         return ResponseEntity.ok(customer);
     }

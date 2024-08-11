@@ -44,7 +44,7 @@ public class Employee {
 
     @JsonBackReference(value = "employee-boss")
     @ManyToOne
-    @JoinColumn(name = "employeeId")
+    @JoinColumn(name = "employeeId", nullable = true)
     private Employee boss;
 
     @JsonBackReference(value = "employee-office")

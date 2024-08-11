@@ -22,6 +22,8 @@ import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.ou
 import com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.out.PhoneRepository;
 import com.grabandgo.grabandgo_backend.user.infrastructure.out.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 /**
  * AuthService
  */
@@ -37,6 +39,7 @@ public class AuthService {
 	private final PhoneRepository phoneRepository;
 	private final CustomerRepository customerRepository;
 
+	@Transactional
 	public AuthResponse login(LoginRequest request) {
 		authManager.authenticate(
 				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
@@ -50,6 +53,7 @@ public class AuthService {
 				.build();
 	}
 
+	@Transactional
 	public AuthResponse register(RegisterRequest request) {
 
 		// CREATE

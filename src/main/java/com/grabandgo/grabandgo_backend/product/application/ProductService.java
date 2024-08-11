@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.product.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.product.domain.Product;
 
@@ -12,7 +13,7 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    Product getProductById(Long id);
+    Optional<Product> getProductById(Long id);
 
     List<Product> fetchProductsList();
 

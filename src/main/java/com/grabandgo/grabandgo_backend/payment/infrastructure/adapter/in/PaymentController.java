@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.payment.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.payment.application.PaymentService;
 import com.grabandgo.grabandgo_backend.payment.domain.Payment;
 
+@Validated
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentController {
@@ -24,13 +29,13 @@ public class PaymentController {
     private PaymentService service;
 
     @PostMapping("/savePayment")
-    public ResponseEntity<Payment> savePayment(@RequestBody Payment payment) {
+    public ResponseEntity<Payment> savePayment(@Valid @RequestBody Payment payment) {
         service.savePayment(payment);
         return ResponseEntity.ok(payment);
     }
 
     @PutMapping("/updatePayment/{paymentId}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable Long paymentId, @RequestBody Payment payment) {
+    public ResponseEntity<Payment> updatePayment(@PathVariable Long paymentId, @Valid @RequestBody Payment payment) {
         service.updatePayment(paymentId, payment);
         return ResponseEntity.ok(payment);
     }

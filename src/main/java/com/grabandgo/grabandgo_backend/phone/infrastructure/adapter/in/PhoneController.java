@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.phone.application.PhoneService;
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 
+@Validated
 @RestController
 @RequestMapping("/api/phone")
 public class PhoneController {
@@ -24,13 +29,13 @@ public class PhoneController {
     private PhoneService service;
 
     @PostMapping("/savePhone")
-    public ResponseEntity<Phone> savePhone(@RequestBody Phone phone) {
+    public ResponseEntity<Phone> savePhone(@Valid @RequestBody Phone phone) {
         service.savePhone(phone);
         return ResponseEntity.ok(phone);
     }
 
     @PutMapping("/updatePhone/{phoneId}")
-    public ResponseEntity<Phone> updatePhone(@PathVariable Long phoneId, @RequestBody Phone phone) {
+    public ResponseEntity<Phone> updatePhone(@PathVariable Long phoneId, @Valid @RequestBody Phone phone) {
         service.updatePhone(phoneId, phone);
         return ResponseEntity.ok(phone);
     }

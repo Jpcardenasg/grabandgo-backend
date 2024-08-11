@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.country.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.country.domain.Country;
 /**
  * CountryAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/country")
 public class CountryController {
@@ -27,13 +32,13 @@ public class CountryController {
     private CountryService service;
 
     @PostMapping("/saveCountry")
-    public ResponseEntity<Country> saveCountry(@RequestBody Country country) {
+    public ResponseEntity<Country> saveCountry(@Valid @RequestBody Country country) {
         service.saveCountry(country);
         return ResponseEntity.ok(country);
     }
 
     @PutMapping("/updateCountry/{countryId}")
-    public ResponseEntity<Country> updateCountry(@PathVariable Long countryId, @RequestBody Country country) {
+    public ResponseEntity<Country> updateCountry(@PathVariable Long countryId, @Valid @RequestBody Country country) {
         service.updateCountry(countryId, country);
         return ResponseEntity.ok(country);
     }

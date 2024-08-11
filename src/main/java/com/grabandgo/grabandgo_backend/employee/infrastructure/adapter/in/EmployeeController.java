@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.employee.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 /**
  * EmployeeAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
@@ -27,13 +32,14 @@ public class EmployeeController {
     private EmployeeService service;
 
     @PostMapping("/saveEmployee")
-    public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody Employee employee) {
         service.saveEmployee(employee);
         return ResponseEntity.ok(employee);
     }
 
     @PutMapping("/updateEmployee/{employeeId}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable String employeeId, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable String employeeId,
+            @Valid @RequestBody Employee employee) {
         service.updateEmployee(employeeId, employee);
         return ResponseEntity.ok(employee);
     }

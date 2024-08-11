@@ -5,7 +5,7 @@ import java.util.List;
 import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 
 /**
- * SupplierContactServiceImp
+ * SupplierContactServiceImpl
  */
 public interface SupplierContactService {
 

@@ -1,5 +1,9 @@
 package com.grabandgo.grabandgo_backend.supplierContact.infrastructure.adapter.in;
 
+import jakarta.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
 /**
  * BranchContactAdapter
  */
+@Validated
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierContactController {
@@ -26,14 +31,14 @@ public class SupplierContactController {
     private SupplierContactService service;
 
     @PostMapping("/saveSupplierContact")
-    public ResponseEntity<SupplierContact> saveSupplierContact(@RequestBody SupplierContact supplierContact) {
+    public ResponseEntity<SupplierContact> saveSupplierContact(@Valid @RequestBody SupplierContact supplierContact) {
         service.saveSupplierContact(supplierContact);
         return ResponseEntity.ok(supplierContact);
     }
 
     @PutMapping("/updateSupplierContact/{SupplierContactId}")
     public ResponseEntity<SupplierContact> updateSupplierContact(@PathVariable Long supplierContactId,
-            @RequestBody SupplierContact supplierContact) {
+            @Valid @RequestBody SupplierContact supplierContact) {
         service.updateSupplierContact(supplierContactId, supplierContact);
         return ResponseEntity.ok(supplierContact);
     }
