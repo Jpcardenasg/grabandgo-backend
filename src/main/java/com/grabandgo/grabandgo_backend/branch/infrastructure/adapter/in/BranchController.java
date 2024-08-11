@@ -50,7 +50,7 @@ public class BranchController {
         return ResponseEntity.ok(branchId);
     }
 
-    @GetMapping("/allBranchs")
+    @GetMapping("/allBranches")
     public ResponseEntity<List<Branch>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }

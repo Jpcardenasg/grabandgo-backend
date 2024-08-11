@@ -1,6 +1,7 @@
 package com.grabandgo.grabandgo_backend.payment.application;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.payment.domain.Payment;
 
@@ -12,7 +13,7 @@ public interface PaymentService {
 
     void deletePayment(Long id);
 
-    Payment getPaymentById(Long id);
+    Optional<Payment> getPaymentById(Long id);
 
     List<Payment> fetchPaymentsList();
 

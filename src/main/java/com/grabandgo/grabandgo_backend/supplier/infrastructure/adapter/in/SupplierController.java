@@ -53,9 +53,9 @@ public class SupplierController {
         return ResponseEntity.ok(service.fetchSuppliersList());
     }
 
-    @GetMapping("/getSupplier/{}")
-    public ResponseEntity<Optional<Supplier>> getSupplierByNit(@PathVariable String nit) {
-        return ResponseEntity.ok(service.getSupplierById(nit));
+    @GetMapping("/getSupplier/{nit}")
+    public ResponseEntity<Supplier> getSupplierByNit(@PathVariable String nit) {
+        return ResponseEntity.of(service.getSupplierById(nit));
     }
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.payment.application.PaymentService;
 import com.grabandgo.grabandgo_backend.payment.domain.Payment;
 
@@ -49,5 +50,10 @@ public class PaymentController {
     @GetMapping("/allPayments")
     public ResponseEntity<List<Payment>> findAll() {
         return ResponseEntity.ok(service.fetchPaymentsList());
+    }
+
+    @GetMapping("/getPayment/{id}")
+    public ResponseEntity<Payment> getPaymentByid(@PathVariable Long id) {
+        return ResponseEntity.of(service.getPaymentById(id));
     }
 }

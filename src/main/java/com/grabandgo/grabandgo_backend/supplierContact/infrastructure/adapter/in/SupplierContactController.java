@@ -25,7 +25,7 @@ import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
  */
 @Validated
 @RestController
-@RequestMapping("/api/supplier")
+@RequestMapping("/api/supplierContact")
 public class SupplierContactController {
     @Autowired
     private SupplierContactService service;
