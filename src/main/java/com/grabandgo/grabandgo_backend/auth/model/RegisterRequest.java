@@ -23,7 +23,7 @@ public class RegisterRequest {
     private String idNumber;
     private String name;
     private String lastName;
-    private String address1;
+    private String address;
     private String postalCode;
     private String telephone;
     private City city;

@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import com.grabandgo.grabandgo_backend.order.application.OrderService;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
 
-/**
- * OrderAdapter
- */
-@Validated
 @RestController
+@RequestMapping("/api/order")
+@Validated
 public class OrderController {
     @Autowired
     private OrderService service;

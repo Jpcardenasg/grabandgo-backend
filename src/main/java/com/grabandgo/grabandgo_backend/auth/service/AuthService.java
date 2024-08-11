@@ -31,79 +31,79 @@ import jakarta.transaction.Transactional;
 @RequiredArgsConstructor
 public class AuthService {
 
-	private final UserRepository userRepository;
-	private final JwtService jwtService;
-	private final PasswordEncoder passwordEncoder;
-	private final AuthenticationManager authManager;
-	private final CustomerContactRepository customerContactRepository;
-	private final PhoneRepository phoneRepository;
-	private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authManager;
+    private final CustomerContactRepository customerContactRepository;
+    private final PhoneRepository phoneRepository;
+    private final CustomerRepository customerRepository;
 
 	@Transactional
-	public AuthResponse login(LoginRequest request) {
-		authManager.authenticate(
-				new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-		Role userRole = userRepository.findByUsername(request.getUsername()).orElseThrow().getRole();
-		UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
-		String token = jwtService.getToken(userDetails);
-		return AuthResponse.builder()
-				.token(token)
-				.username(request.getUsername())
-				.role(userRole)
-				.build();
-	}
+    public AuthResponse login(LoginRequest request) {
+        authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        Role userRole = userRepository.findByUsername(request.getUsername()).orElseThrow().getRole();
+        UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        String token = jwtService.getToken(userDetails);
+        return AuthResponse.builder()
+                .token(token)
+                .username(request.getUsername())
+                .role(userRole)
+                .build();
+    }
 
 	@Transactional
-	public AuthResponse register(RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
 
-		// CREATE
-		User user = User.builder()
-				.username(request.getUsername())
-				.password(passwordEncoder.encode(request.getPassword()))
-				.role(Role.CUSTOMER)
-				.build();
+        // CREATE
+        User user = User.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.CUSTOMER)
+                .build();
 
-		// CREATE PHONE
-		Phone phone = Phone.builder()
-				.number(request.getPhone().getNumber())
-				.phoneType(request.getPhone().getPhoneType())
-				.prefix(request.getPhone().getPrefix())
-				.build();
+        // CREATE PHONE
+        Phone phone = Phone.builder()
+                .number(request.getPhone().getNumber())
+                .phoneType(request.getPhone().getPhoneType())
+                .prefix(request.getPhone().getPrefix())
+                .build();
 
-		// CREATE CUSTOMER
-		Customer customer = Customer.builder()
-				.id(request.getIdNumber())
-				.name(request.getName())
-				.lastName(request.getLastName())
-				.address(request.getAddress1())
-				.postalCode(request.getPostalCode())
-				.city(request.getCity())
-				.employee(null)
-				.user(user)
-				.build();
+        // CREATE CUSTOMER
+        Customer customer = Customer.builder()
+                .id(request.getIdNumber())
+                .name(request.getName())
+                .lastName(request.getLastName())
+                .address(request.getAddress())
+                .postalCode(request.getPostalCode())
+                .city(request.getCity())
+                .employee(null)
+                .user(user)
+                .build();
 
-		// SAVE CUSTOMERCONTACT
-		CustomerContact customerContact = CustomerContact.builder()
-				.email(request.getUsername())
-				.customer(customer)
-				.phone(phone)
-				.build();
+        // SAVE CUSTOMERCONTACT
+        CustomerContact customerContact = CustomerContact.builder()
+                .email(request.getUsername())
+                .customer(customer)
+                .phone(phone)
+                .build();
 
-		// ASSIGNAMENTS
-		phone.getCustomerContacts().add(customerContact);
-		customer.getContactsCustomer().add(customerContact);
+        // ASSIGNAMENTS
+        phone.getCustomerContacts().add(customerContact);
+        customer.getContactsCustomer().add(customerContact);
 
-		// SAVES
-		phoneRepository.save(phone);
-		userRepository.save(user);
-		customerRepository.save(customer);
-		customerContactRepository.save(customerContact);
+        // SAVES
+        phoneRepository.save(phone);
+        userRepository.save(user);
+        customerRepository.save(customer);
+        customerContactRepository.save(customerContact);
 
-		return AuthResponse.builder()
-				.token(jwtService.getToken(user))
-				.username(user.getUsername())
-				.role(user.getRole())
-				.build();
-	}
+        return AuthResponse.builder()
+                .token(jwtService.getToken(user))
+                .username(user.getUsername())
+                .role(user.getRole())
+                .build();
+    }
 
 }
