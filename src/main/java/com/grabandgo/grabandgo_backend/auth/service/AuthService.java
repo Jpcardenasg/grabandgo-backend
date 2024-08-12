@@ -39,22 +39,22 @@ public class AuthService {
     private final PhoneRepository phoneRepository;
     private final CustomerRepository customerRepository;
 
-	@Transactional
-    public AuthResponse login(LoginRequest request) {
-        authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        Role userRole = userRepository.findByUsername(request.getUsername()).orElseThrow().getRole();
-        UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
-        String token = jwtService.getToken(userDetails);
-        return AuthResponse.builder()
-                .token(token)
-                .username(request.getUsername())
-                .role(userRole)
-                .build();
-    }
+        @Transactional
+        public AuthResponse login(LoginRequest request) {
+                authManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                Role userRole = userRepository.findByUsername(request.getUsername()).orElseThrow().getRole();
+                UserDetails userDetails = userRepository.findByUsername(request.getUsername()).orElseThrow();
+                String token = jwtService.getToken(userDetails);
+                return AuthResponse.builder()
+                        .token(token)
+                        .username(request.getUsername())
+                        .role(userRole)
+                        .build();
+        }
 
 	@Transactional
-    public AuthResponse register(RegisterRequest request) {
+        public AuthResponse register(RegisterRequest request) {
 
         // CREATE
         User user = User.builder()

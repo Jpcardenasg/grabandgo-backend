@@ -22,7 +22,7 @@ public class Branch {
     private Long id;
     private String direction;
 
-    @JsonBackReference
+    @JsonBackReference(value = "supplier-branch")
     @ManyToOne
     @JoinColumn(name = "supplierNit")
     private Supplier supplier;
