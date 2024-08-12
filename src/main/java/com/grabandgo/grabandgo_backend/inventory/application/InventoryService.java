@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
+import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
 
 /**
  * InventaryService
@@ -16,7 +17,7 @@ public interface InventoryService {
 
     void deleteInventory(Long id);
 
-    List<Inventory> findAll();
+    List<InventoryDTO> findAll();
 
-    Optional<Inventory> findById(Long id);
+    Optional<InventoryDTO> findById(Long id);
 }

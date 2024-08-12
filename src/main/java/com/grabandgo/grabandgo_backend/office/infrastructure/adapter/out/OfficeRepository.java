@@ -5,8 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import com.grabandgo.grabandgo_backend.office.domain.Office;
 import java.util.List;
+
+import com.grabandgo.grabandgo_backend.city.domain.DTO.City;
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
-import com.grabandgo.grabandgo_backend.city.domain.City;
 
 /**
  * OfficeRepository

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.customerContact.application.CustomerContactService;
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
+import com.grabandgo.grabandgo_backend.customerContact.domain.DTO.CustomerContactDTO;
 
 /**
  * ContactAdapter
@@ -48,12 +49,12 @@ public class CustomerContactController {
     }
 
     @GetMapping("/allCustomerContacts")
-    public ResponseEntity<List<CustomerContact>> findAll() {
+    public ResponseEntity<List<CustomerContactDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/getCustomerContact/{id}")
-    public ResponseEntity<CustomerContact> getCustomerContactByid(@PathVariable Long id) {
+    public ResponseEntity<CustomerContactDTO> getCustomerContactByid(@PathVariable Long id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

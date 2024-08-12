@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.office.domain.Office;
+import com.grabandgo.grabandgo_backend.office.domain.DTO.OfficeDTO;
 
 /**
  * OfficeService
@@ -15,7 +16,7 @@ public interface OfficeService {
 
     void deleteOffice(Long id);
 
-    List<Office> findAll();
+    List<OfficeDTO> findAll();
 
-    Optional<Office> findById(Long id);
+    Optional<OfficeDTO> findById(Long id);
 }

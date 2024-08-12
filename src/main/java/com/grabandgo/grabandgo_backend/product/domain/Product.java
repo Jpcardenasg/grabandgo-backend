@@ -34,6 +34,7 @@ public class Product {
     private String description;
     private Double sellPrice;
     private Double supplierPrice;
+    private String img;
 
     @JsonBackReference(value = "productGamma-product")
     @ManyToOne

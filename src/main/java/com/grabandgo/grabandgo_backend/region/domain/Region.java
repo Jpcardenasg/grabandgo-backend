@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.city.domain.DTO.City;
 import com.grabandgo.grabandgo_backend.country.domain.Country;
 
 import jakarta.persistence.CascadeType;

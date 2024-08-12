@@ -29,8 +29,8 @@ public class CountryServiceImpl implements CountryService {
 
     @Transactional
     @Override
-    public List<Country> findAll() {
-        return countryRepository.findAll();
+    public List<CountryDTO> findAll() {
+        return countryRepository.findAll().stream().map(this::countryToDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -52,8 +52,8 @@ public class CountryServiceImpl implements CountryService {
 
     @Transactional
     @Override
-    public Optional<Country> findById(Long id) {
-        return countryRepository.findById(id);
+    public Optional<CountryDTO> findById(Long id) {
+        return countryRepository.findById(id).map(this::countryToDto);
     }
 
     @Override

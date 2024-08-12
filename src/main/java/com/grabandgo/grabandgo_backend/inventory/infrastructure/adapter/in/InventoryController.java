@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.inventory.application.InventoryService;
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
+import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
 
 /**
  * InventaryAdapter
@@ -50,12 +51,12 @@ public class InventoryController {
     }
 
     @GetMapping("/allInventories")
-    public ResponseEntity<List<Inventory>> findAll() {
+    public ResponseEntity<List<InventoryDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/getInvetory/{id}")
-    public ResponseEntity<Inventory> getInvetoryByid(@PathVariable Long id) {
+    public ResponseEntity<InventoryDTO> getInvetoryByid(@PathVariable Long id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

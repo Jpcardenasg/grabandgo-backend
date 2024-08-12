@@ -51,7 +51,7 @@ public class CountryController {
     }
 
     @GetMapping("/allCountries")
-    public ResponseEntity<List<Country>> findAll() {
+    public ResponseEntity<List<CountryDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
@@ -61,7 +61,7 @@ public class CountryController {
     }
 
     @GetMapping("/getCountry/{id}")
-    public ResponseEntity<Country> getCountryByid(@PathVariable Long id) {
+    public ResponseEntity<CountryDTO> getCountryByid(@PathVariable Long id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

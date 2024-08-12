@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.office.application.OfficeService;
 import com.grabandgo.grabandgo_backend.office.domain.Office;
+import com.grabandgo.grabandgo_backend.office.domain.DTO.OfficeDTO;
 
 /**
  * OfficeAdapter
@@ -50,12 +51,12 @@ public class OfficeController {
     }
 
     @GetMapping("/allOffices")
-    public ResponseEntity<List<Office>> findAll() {
+    public ResponseEntity<List<OfficeDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/getOffice/{id}")
-    public ResponseEntity<Office> getOfficeByid(@PathVariable Long id) {
+    public ResponseEntity<OfficeDTO> getOfficeByid(@PathVariable Long id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

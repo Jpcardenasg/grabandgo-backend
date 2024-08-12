@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
+import com.grabandgo.grabandgo_backend.customerContact.domain.DTO.CustomerContactDTO;
 
 /**
  * ContactService
@@ -15,7 +16,7 @@ public interface CustomerContactService {
 
     void deleteCustomerContact(Long id);
 
-    List<CustomerContact> findAll();
+    List<CustomerContactDTO> findAll();
 
-    Optional<CustomerContact> findById(Long id);
+    Optional<CustomerContactDTO> findById(Long id);
 }

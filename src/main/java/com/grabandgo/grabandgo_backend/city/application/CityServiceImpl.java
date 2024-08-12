@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.city.domain.DTO.City;
 import com.grabandgo.grabandgo_backend.city.domain.DTO.CityDTO;
 import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
 
@@ -30,8 +30,8 @@ public class CityServiceImpl implements CityService {
 
     @Transactional
     @Override
-    public List<City> findAll() {
-        return cityRepository.findAll();
+    public List<CityDTO> findAll() {
+        return cityRepository.findAll().stream().map(this::cityToDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -53,8 +53,8 @@ public class CityServiceImpl implements CityService {
 
     @Transactional
     @Override
-    public Optional<City> findById(Long id) {
-        return cityRepository.findById(id);
+    public Optional<CityDTO> findById(Long id) {
+        return Optional.of(cityRepository.findById(id).map(this::cityToDto)).orElse(null);
     }
 
     @Override

@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.customerContact.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.customerContact.domain.CustomerContact;
+import com.grabandgo.grabandgo_backend.customerContact.domain.DTO.CustomerContactDTO;
 import com.grabandgo.grabandgo_backend.customerContact.infrastructure.adapter.out.CustomerContactRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,8 +30,8 @@ public class CustomerContactServiceImpl implements CustomerContactService {
 
     @Transactional
     @Override
-    public List<CustomerContact> findAll() {
-        return customerContactRepository.findAll();
+    public List<CustomerContactDTO> findAll() {
+        return customerContactRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -51,7 +53,11 @@ public class CustomerContactServiceImpl implements CustomerContactService {
 
     @Transactional
     @Override
-    public Optional<CustomerContact> findById(Long id) {
-        return customerContactRepository.findById(id);
+    public Optional<CustomerContactDTO> findById(Long id) {
+        return customerContactRepository.findById(id).map(this::toDto);
+    }
+
+    private CustomerContactDTO toDto(CustomerContact customerContact) {
+        return new CustomerContactDTO(customerContact);
     }
 }

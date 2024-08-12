@@ -1,7 +1,7 @@
 package com.grabandgo.grabandgo_backend.branch.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.city.domain.DTO.City;
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 
 import jakarta.persistence.Entity;

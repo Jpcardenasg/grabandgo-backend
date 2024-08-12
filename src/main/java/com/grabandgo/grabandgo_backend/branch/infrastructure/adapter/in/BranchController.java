@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.branch.application.BranchService;
 import com.grabandgo.grabandgo_backend.branch.domain.Branch;
+import com.grabandgo.grabandgo_backend.branch.domain.DTO.BranchDTO;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,12 +52,12 @@ public class BranchController {
     }
 
     @GetMapping("/allBranches")
-    public ResponseEntity<List<Branch>> findAll() {
+    public ResponseEntity<List<BranchDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/getBranch/{id}")
-    public ResponseEntity<Branch> getBranchByid(@PathVariable Long id) {
+    public ResponseEntity<BranchDTO> getBranchByid(@PathVariable Long id) {
         return ResponseEntity.of(service.findById(id));
     }
 

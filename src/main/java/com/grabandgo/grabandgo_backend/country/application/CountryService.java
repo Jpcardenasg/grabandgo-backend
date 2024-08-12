@@ -17,9 +17,9 @@ public interface CountryService {
 
     void deleteCountry(Long id);
 
-    List<Country> findAll();
+    List<CountryDTO> findAll();
 
-    Optional<Country> findById(Long id);
+    Optional<CountryDTO> findById(Long id);
 
     List<CountryDTO> findAllView();
 }

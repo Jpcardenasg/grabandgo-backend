@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.employee.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
+import com.grabandgo.grabandgo_backend.employee.domain.DTO.EmployeeDTO;
 import com.grabandgo.grabandgo_backend.employee.infrastructure.adapter.out.EmployeeRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,8 +29,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> findAll() {
+        return employeeRepository.findAll().stream().map(this::tDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -50,7 +52,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public Optional<Employee> findById(String id) {
-        return employeeRepository.findById(id);
+    public Optional<EmployeeDTO> findById(String id) {
+        return employeeRepository.findById(id).map(this::tDto);
+    }
+
+    private EmployeeDTO tDto(Employee employee) {
+        return new EmployeeDTO(employee);
     }
 }

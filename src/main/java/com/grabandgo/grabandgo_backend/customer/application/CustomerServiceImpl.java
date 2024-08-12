@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.customer.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
+import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerDTO;
 import com.grabandgo.grabandgo_backend.customer.infrastructure.adapter.out.CustomerRepository;
 
 import jakarta.transaction.Transactional;
@@ -25,8 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public List<Customer> fetchCustomersList() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> fetchCustomersList() {
+        return customerRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -48,7 +50,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public Optional<Customer> findById(String id) {
-        return customerRepository.findById(id);
+    public Optional<CustomerDTO> findById(String id) {
+        return customerRepository.findById(id).map(this::toDto);
+    }
+
+    private CustomerDTO toDto(Customer customer){
+        return CustomerDTO.builder()
+            .id(customer.getId())
+            .name(customer.getName())
+            .lastName(customer.getLastName())
+            .address(customer.getAddress())
+            .postalCode(customer.getPostalCode())
+            .city_id(customer.getCity().getId())
+            .contactsCustomer(customer.getContactsCustomer())
+            .employee_id(customer.getEmployee().getId())
+            .orders(customer.getOrders())
+            .user_id(customer.getUser().getId())
+            .build();
     }
 }

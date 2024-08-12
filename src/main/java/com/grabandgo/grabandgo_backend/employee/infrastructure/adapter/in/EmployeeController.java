@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.employee.application.EmployeeService;
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
+import com.grabandgo.grabandgo_backend.employee.domain.DTO.EmployeeDTO;
 
 /**
  * EmployeeAdapter
@@ -51,12 +52,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/allEmployees")
-    public ResponseEntity<List<Employee>> findAll() {
+    public ResponseEntity<List<EmployeeDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/getEmployee/{id}")
-    public ResponseEntity<Employee> getEmployeeByid(@PathVariable String id) {
+    public ResponseEntity<EmployeeDTO> getEmployeeByid(@PathVariable String id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.branch.domain.Branch;
+import com.grabandgo.grabandgo_backend.branch.domain.DTO.BranchDTO;
 
 public interface BranchService {
 
@@ -13,8 +14,8 @@ public interface BranchService {
 
     void deleteBranch(Long id);
 
-    List<Branch> findAll();
+    List<BranchDTO> findAll();
 
-    Optional<Branch> findById(Long id);
+    Optional<BranchDTO> findById(Long id);
 
 }

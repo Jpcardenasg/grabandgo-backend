@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.branch.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.branch.domain.Branch;
+import com.grabandgo.grabandgo_backend.branch.domain.DTO.BranchDTO;
 import com.grabandgo.grabandgo_backend.branch.infrastructure.adapter.out.BranchRepository;
 
 import jakarta.transaction.Transactional;
@@ -28,8 +30,8 @@ public class BranchServiceImpl implements BranchService {
 
     @Transactional
     @Override
-    public List<Branch> findAll() {
-        return branchRepository.findAll();
+    public List<BranchDTO> findAll() {
+        return branchRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -51,8 +53,18 @@ public class BranchServiceImpl implements BranchService {
 
     @Transactional
     @Override
-    public Optional<Branch> findById(Long id) {
-        return branchRepository.findById(id);
+    public Optional<BranchDTO> findById(Long id) {
+        Optional<BranchDTO> branch = Optional.of(toDto(branchRepository.findById(id).orElse(null)));
+        return branch;
+    }
+
+    private BranchDTO toDto(Branch branch) {
+        return new BranchDTO().builder()
+                .id(branch.getId())
+                .direction(branch.getDirection())
+                .city_id(branch.getCity().getId())
+                .supplier_id(branch.getSupplier().getNit())
+                .build();
     }
 
 }

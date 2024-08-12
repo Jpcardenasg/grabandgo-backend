@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.office.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.office.domain.Office;
+import com.grabandgo.grabandgo_backend.office.domain.DTO.OfficeDTO;
 import com.grabandgo.grabandgo_backend.office.infrastructure.adapter.out.OfficeRepository;
 
 import jakarta.transaction.Transactional;
@@ -27,8 +29,8 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Transactional
     @Override
-    public List<Office> findAll() {
-        return officeRepository.findAll();
+    public List<OfficeDTO> findAll() {
+        return officeRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Transactional
@@ -50,7 +52,11 @@ public class OfficeServiceImpl implements OfficeService {
 
     @Transactional
     @Override
-    public Optional<Office> findById(Long id) {
-        return officeRepository.findById(id);
+    public Optional<OfficeDTO> findById(Long id) {
+        return officeRepository.findById(id).map(this::toDto);
+    }
+
+    private OfficeDTO toDto(Office off) {
+        return new OfficeDTO(off);
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
+import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerDTO;
 
 public interface CustomerService {
 
@@ -13,8 +14,8 @@ public interface CustomerService {
 
     void deleteCustomer(String id);
 
-    Optional<Customer> findById(String id);
+    Optional<CustomerDTO> findById(String id);
 
-    List<Customer> fetchCustomersList();
+    List<CustomerDTO> fetchCustomersList();
 
 }

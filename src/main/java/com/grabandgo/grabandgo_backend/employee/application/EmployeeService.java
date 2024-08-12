@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
+import com.grabandgo.grabandgo_backend.employee.domain.DTO.EmployeeDTO;
 
 /**
  * EmployeeService
@@ -15,7 +16,7 @@ public interface EmployeeService {
 
     void deleteEmployee(String id);
 
-    List<Employee> findAll();
+    List<EmployeeDTO> findAll();
 
-    Optional<Employee> findById(String id);
+    Optional<EmployeeDTO> findById(String id);
 }
