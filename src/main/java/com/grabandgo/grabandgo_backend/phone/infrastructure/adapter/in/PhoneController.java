@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.phone.application.PhoneService;
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+import com.grabandgo.grabandgo_backend.phone.domain.DTO.PhoneDTO;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Validated
 @RestController
@@ -47,7 +50,13 @@ public class PhoneController {
     }
 
     @GetMapping("/allPhones")
-    public ResponseEntity<List<Phone>> findAll() {
+    public ResponseEntity<List<PhoneDTO>> findAll() {
         return ResponseEntity.ok(service.fetchPhonesList());
     }
+
+    @GetMapping("/getPhone/{id}")
+    public ResponseEntity<PhoneDTO> getMethodName(@RequestParam Long id) {
+        return ResponseEntity.ok(service.getPhoneById(id));
+    }
+    
 }

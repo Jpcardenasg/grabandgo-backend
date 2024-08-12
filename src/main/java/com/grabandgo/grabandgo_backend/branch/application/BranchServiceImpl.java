@@ -59,7 +59,8 @@ public class BranchServiceImpl implements BranchService {
     }
 
     private BranchDTO toDto(Branch branch) {
-        return new BranchDTO().builder()
+        new BranchDTO();
+        return BranchDTO.builder()
                 .id(branch.getId())
                 .direction(branch.getDirection())
                 .city_id(branch.getCity().getId())

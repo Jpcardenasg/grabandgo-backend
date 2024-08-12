@@ -1,10 +1,13 @@
 package com.grabandgo.grabandgo_backend.orderDetail.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.ProductOrderPk;
+import com.grabandgo.grabandgo_backend.orderDetail.domain.DTO.OrderDetailDTO;
 import com.grabandgo.grabandgo_backend.orderDetail.infrastructure.adapter.out.OrderDetailRepository;
 
 import jakarta.transaction.Transactional;
@@ -40,13 +43,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Transactional
     @Override
-    public List<OrderDetail> fetchOrderDetailsList() {
-        return orderDetailRepository.findAll();
+    public List<OrderDetailDTO> fetchOrderDetailsList() {
+        return orderDetailRepository.findAll().stream().map(this::tDto).collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public OrderDetail getOrderDetailById(ProductOrderPk id) {
-        return orderDetailRepository.findById(id).orElse(null);
+    public OrderDetailDTO getOrderDetailById(ProductOrderPk id) {
+        return orderDetailRepository.findById(id).map(this::tDto).orElse(null);
+    }
+
+    private OrderDetailDTO tDto(OrderDetail od) {
+        return new OrderDetailDTO(od);
     }
 }

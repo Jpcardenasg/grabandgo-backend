@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.grabandgo.grabandgo_backend.employee.domain.Employee;
 import com.grabandgo.grabandgo_backend.office.domain.Office;
+import lombok.Data;
 
 /**
  * OfficeDTO
  */
+@Data
 public class OfficeDTO {
 
     private Long id;

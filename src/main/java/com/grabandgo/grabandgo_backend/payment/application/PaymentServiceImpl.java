@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.payment.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.payment.domain.Payment;
+import com.grabandgo.grabandgo_backend.payment.domain.DTO.PaymentDTO;
 import com.grabandgo.grabandgo_backend.payment.infrastructure.adapter.out.PaymentRepository;
 
 import jakarta.transaction.Transactional;
@@ -42,14 +44,18 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Transactional
     @Override
-    public Optional<Payment> getPaymentById(Long id) {
-        return paymentRepository.findById(id);
+    public Optional<PaymentDTO> getPaymentById(Long id) {
+        return paymentRepository.findById(id).map(this::toDto);
     }
 
     @Transactional
     @Override
-    public List<Payment> fetchPaymentsList() {
-        return paymentRepository.findAll();
+    public List<PaymentDTO> fetchPaymentsList() {
+        return paymentRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    private PaymentDTO toDto(Payment payment) {
+        return new PaymentDTO(payment);
     }
 
 }

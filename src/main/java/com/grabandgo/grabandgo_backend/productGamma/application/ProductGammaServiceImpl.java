@@ -1,10 +1,13 @@
 package com.grabandgo.grabandgo_backend.productGamma.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.productGamma.domain.ProductGamma;
+import com.grabandgo.grabandgo_backend.productGamma.domain.DTO.ProductsGammaDTO;
 import com.grabandgo.grabandgo_backend.productGamma.infrastructure.adapter.out.ProductGammaRepository;
 
 import jakarta.transaction.Transactional;
@@ -40,14 +43,17 @@ public class ProductGammaServiceImpl implements ProductGammaService {
 
     @Transactional
     @Override
-    public ProductGamma getProductGammaById(Long id) {
-        return productGammaRepository.findById(id).orElse(null);
+    public ProductsGammaDTO getProductGammaById(Long id) {
+        return productGammaRepository.findById(id).map(this::toDto).orElse(null);
     }
 
     @Transactional
     @Override
-    public List<ProductGamma> fetchProductGammasList() {
-        return productGammaRepository.findAll();
+    public List<ProductsGammaDTO> fetchProductGammasList() {
+        return productGammaRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
+    private ProductsGammaDTO toDto(ProductGamma productG){
+        return new ProductsGammaDTO(productG);
+    }
 }

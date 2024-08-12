@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.phoneType.application.PhoneTypeService;
 import com.grabandgo.grabandgo_backend.phoneType.domain.PhoneType;
+import com.grabandgo.grabandgo_backend.phoneType.domain.DTO.PhoneTypeDTO;
 
 @Validated
 @RestController
@@ -48,7 +49,7 @@ public class PhoneTypeController {
     }
 
     @GetMapping("/allPhoneTypes")
-    public ResponseEntity<List<PhoneType>> findAll() {
+    public ResponseEntity<List<PhoneTypeDTO>> findAll() {
         return ResponseEntity.ok(service.fetchPhoneTypesList());
     }
 }

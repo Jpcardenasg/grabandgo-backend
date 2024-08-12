@@ -60,7 +60,8 @@ public class RegionServiceImpl implements RegionService {
     }
 
     private RegionDTO regionToDto(Region region) {
-        return new RegionDTO().builder().id(region.getId()).countryId(region.getCountry().getId())
+        new RegionDTO();
+        return RegionDTO.builder().id(region.getId()).countryId(region.getCountry().getId())
                 .name(region.getName()).build();
     }
 

@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.product.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.product.domain.Product;
+import com.grabandgo.grabandgo_backend.product.domain.DTO.ProductDTO;
 import com.grabandgo.grabandgo_backend.product.infrastructure.adapter.out.ProductRepository;
 
 import jakarta.transaction.Transactional;
@@ -42,14 +44,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public Optional<Product> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Optional<ProductDTO> getProductById(Long id) {
+        return productRepository.findById(id).map(this::toDto);
     }
 
     @Transactional
     @Override
-    public List<Product> fetchProductsList() {
-        return productRepository.findAll();
+    public List<ProductDTO> fetchProductsList() {
+        return productRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
+    private ProductDTO toDto(Product pd){
+        return new ProductDTO(pd);
+    }
 }

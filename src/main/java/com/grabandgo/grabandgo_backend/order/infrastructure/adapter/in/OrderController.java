@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.grabandgo.grabandgo_backend.order.application.OrderService;
 import com.grabandgo.grabandgo_backend.order.domain.Order;
+import com.grabandgo.grabandgo_backend.order.domain.DTO.OrderDTO;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/order")
@@ -47,8 +49,13 @@ public class OrderController {
     }
 
     @GetMapping("/allOrders")
-    public ResponseEntity<List<Order>> findAll() {
+    public ResponseEntity<List<OrderDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @GetMapping("/getOrder/{id}")
+    public ResponseEntity<Optional<OrderDTO>> getMethodName(@RequestParam Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
 }

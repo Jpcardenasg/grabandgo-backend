@@ -1,10 +1,13 @@
 package com.grabandgo.grabandgo_backend.phone.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+import com.grabandgo.grabandgo_backend.phone.domain.DTO.PhoneDTO;
 import com.grabandgo.grabandgo_backend.phone.infrastructure.adapter.out.PhoneRepository;
 
 import jakarta.transaction.Transactional;
@@ -40,14 +43,18 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Transactional
     @Override
-    public Phone getPhoneById(Long id) {
-        return phoneRepository.findById(id).orElse(null);
+    public PhoneDTO getPhoneById(Long id) {
+        return phoneRepository.findById(id).map(this::toDto).orElse(null);
     }
 
     @Transactional
     @Override
-    public List<Phone> fetchPhonesList() {
-        return phoneRepository.findAll();
+    public List<PhoneDTO> fetchPhonesList() {
+        return phoneRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    private PhoneDTO toDto(Phone phone){
+        return new PhoneDTO(phone);
     }
 
 }

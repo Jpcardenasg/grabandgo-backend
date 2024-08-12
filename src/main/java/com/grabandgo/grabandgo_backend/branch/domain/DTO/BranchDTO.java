@@ -1,6 +1,5 @@
 package com.grabandgo.grabandgo_backend.branch.domain.DTO;
 
-import com.grabandgo.grabandgo_backend.branch.domain.Branch;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

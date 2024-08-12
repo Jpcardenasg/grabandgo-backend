@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.supplier.application.SupplierService;
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
+import com.grabandgo.grabandgo_backend.supplier.domain.DTO.SupplierDTO;
 
 @Validated
 @RestController
@@ -48,12 +49,12 @@ public class SupplierController {
     }
 
     @GetMapping("/allSuppliers")
-    public ResponseEntity<List<Supplier>> findAll() {
+    public ResponseEntity<List<SupplierDTO>> findAll() {
         return ResponseEntity.ok(service.fetchSuppliersList());
     }
 
     @GetMapping("/getSupplier/{nit}")
-    public ResponseEntity<Supplier> getSupplierByNit(@PathVariable String nit) {
+    public ResponseEntity<SupplierDTO> getSupplierByNit(@PathVariable String nit) {
         return ResponseEntity.of(service.getSupplierById(nit));
     }
 

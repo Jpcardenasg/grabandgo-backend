@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.product.application.ProductService;
 import com.grabandgo.grabandgo_backend.product.domain.Product;
+import com.grabandgo.grabandgo_backend.product.domain.DTO.ProductDTO;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,12 +51,12 @@ public class ProductController {
     }
 
     @GetMapping("/allProducts")
-    public ResponseEntity<List<Product>> findAll() {
+    public ResponseEntity<List<ProductDTO>> findAll() {
         return ResponseEntity.ok(service.fetchProductsList());
     }
 
     @GetMapping("/getProduct/{id}")
-    public ResponseEntity<Optional<Product>> getMethodName(@RequestParam Long id) {
+    public ResponseEntity<Optional<ProductDTO>> getMethodName(@RequestParam Long id) {
         return ResponseEntity.ok(service.getProductById(id));
     }
 

@@ -62,6 +62,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     private CountryDTO countryToDto(Country country) {
-        return new CountryDTO().builder().id(country.getId()).name(country.getName()).build();
+        new CountryDTO();
+        return CountryDTO.builder().id(country.getId()).name(country.getName()).build();
     }
 }

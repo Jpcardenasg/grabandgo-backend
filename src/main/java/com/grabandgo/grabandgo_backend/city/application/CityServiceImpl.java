@@ -63,6 +63,7 @@ public class CityServiceImpl implements CityService {
     }
 
     private CityDTO cityToDto(City city) {
-        return new CityDTO().builder().id(city.getId()).name(city.getName()).regionId(city.getRegion().getId()).build();
+        new CityDTO();
+        return CityDTO.builder().id(city.getId()).name(city.getName()).regionId(city.getRegion().getId()).build();
     }
 }

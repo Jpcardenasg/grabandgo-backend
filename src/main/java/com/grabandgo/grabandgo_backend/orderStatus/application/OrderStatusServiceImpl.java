@@ -1,10 +1,13 @@
 package com.grabandgo.grabandgo_backend.orderStatus.application;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.orderStatus.domain.OrderStatus;
+import com.grabandgo.grabandgo_backend.orderStatus.domain.DTO.OrderStatusDTO;
 import com.grabandgo.grabandgo_backend.orderStatus.infrastructure.adapter.out.OrderStatusRepository;
 
 import jakarta.transaction.Transactional;
@@ -40,13 +43,17 @@ public class OrderStatusServiceImpl implements OrderStatusService {
 
     @Transactional
     @Override
-    public List<OrderStatus> fetchOrderStatusesList() {
-        return orderStatusRepository.findAll();
+    public List<OrderStatusDTO> fetchOrderStatusesList() {
+        return orderStatusRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public OrderStatus getOrderStatusById(Long id) {
-        return orderStatusRepository.findById(id).orElse(null);
+    public OrderStatusDTO getOrderStatusById(Long id) {
+        return orderStatusRepository.findById(id).map(this::toDto).orElse(null);
+    }
+
+    private OrderStatusDTO toDto(OrderStatus os) {
+        return new OrderStatusDTO(os);
     }
 }

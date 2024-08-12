@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.orderStatus.application.OrderStatusService;
 import com.grabandgo.grabandgo_backend.orderStatus.domain.OrderStatus;
+import com.grabandgo.grabandgo_backend.orderStatus.domain.DTO.OrderStatusDTO;
 
 @Validated
 @RestController
@@ -48,7 +49,12 @@ public class OrderStatusController {
     }
 
     @GetMapping("/allOrderStatuses")
-    public ResponseEntity<List<OrderStatus>> findAll() {
+    public ResponseEntity<List<OrderStatusDTO>> findAll() {
         return ResponseEntity.ok(service.fetchOrderStatusesList());
+    }
+
+    @GetMapping("/getStatus")
+    public ResponseEntity<OrderStatusDTO> getStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getOrderStatusById(id));
     }
 }

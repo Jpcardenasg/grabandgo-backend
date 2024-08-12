@@ -44,11 +44,11 @@ public class Phone {
     @JsonManagedReference(value = "contact-phone")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
     @Builder.Default
-    private List<CustomerContact> customerContacts = new ArrayList<>();;
+    private List<CustomerContact> customerContacts = new ArrayList<>();
 
     @JsonManagedReference(value = "phone-suplppierContact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
     @Builder.Default
-    private List<SupplierContact> supplierContacts = new ArrayList<>();;
+    private List<SupplierContact> supplierContacts = new ArrayList<>();
 
 }

@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.paymentMethod.application;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.paymentMethod.domain.PaymentMethod;
+import com.grabandgo.grabandgo_backend.paymentMethod.domain.DTO.PaymentMethodDTO;
 
 public interface PaymentMethodService {
 
@@ -12,8 +13,8 @@ public interface PaymentMethodService {
 
     void deletePaymentMethod(Long id);
 
-    PaymentMethod getPaymentMethodById(Long id);
+    PaymentMethodDTO getPaymentMethodById(Long id);
 
-    List<PaymentMethod> fetchPaymentMethodsList();
+    List<PaymentMethodDTO> fetchPaymentMethodsList();
 
 }

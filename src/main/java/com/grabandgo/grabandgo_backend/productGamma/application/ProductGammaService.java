@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.productGamma.application;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.productGamma.domain.ProductGamma;
+import com.grabandgo.grabandgo_backend.productGamma.domain.DTO.ProductsGammaDTO;
 
 public interface ProductGammaService {
 
@@ -12,8 +13,8 @@ public interface ProductGammaService {
 
     void deleteProductGamma(Long id);
 
-    ProductGamma getProductGammaById(Long id);
+    ProductsGammaDTO getProductGammaById(Long id);
 
-    List<ProductGamma> fetchProductGammasList();
+    List<ProductsGammaDTO> fetchProductGammasList();
 
 }

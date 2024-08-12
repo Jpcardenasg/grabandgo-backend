@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.productGamma.application.ProductGammaService;
 import com.grabandgo.grabandgo_backend.productGamma.domain.ProductGamma;
+import com.grabandgo.grabandgo_backend.productGamma.domain.DTO.ProductsGammaDTO;
+
 
 @Validated
 @RestController
@@ -48,7 +50,13 @@ public class ProductGammaController {
     }
 
     @GetMapping("/allProductGammas")
-    public ResponseEntity<List<ProductGamma>> findAll() {
+    public ResponseEntity<List<ProductsGammaDTO>> findAll() {
         return ResponseEntity.ok(service.fetchProductGammasList());
     }
+
+    @GetMapping("/getProductGamma/{id}")
+    public ResponseEntity<ProductsGammaDTO> getProductGamma(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getProductGammaById(id));
+    }
+    
 }

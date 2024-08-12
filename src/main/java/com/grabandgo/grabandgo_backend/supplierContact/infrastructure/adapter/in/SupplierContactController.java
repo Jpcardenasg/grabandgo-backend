@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.supplierContact.application.SupplierContactService;
 import com.grabandgo.grabandgo_backend.supplierContact.domain.SupplierContact;
+import com.grabandgo.grabandgo_backend.supplierContact.domain.DTO.SupplierContactDTO;
 
 /**
  * BranchContactAdapter
@@ -50,7 +51,7 @@ public class SupplierContactController {
     }
 
     @GetMapping("/allSupplierContacts")
-    public ResponseEntity<List<SupplierContact>> findAll() {
+    public ResponseEntity<List<SupplierContactDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 }

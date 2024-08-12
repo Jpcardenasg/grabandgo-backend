@@ -27,8 +27,10 @@ public class CustomerDTO {
     private String address;
     private String postalCode;
     private Long city_id;
+    @Builder.Default
     private List<CustomerContact> contactsCustomer = new ArrayList<>();
     private String employee_id;
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
     private Long user_id;
 }

@@ -2,11 +2,13 @@ package com.grabandgo.grabandgo_backend.supplier.application;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
+import com.grabandgo.grabandgo_backend.supplier.domain.DTO.SupplierDTO;
 import com.grabandgo.grabandgo_backend.supplier.infrastructure.adapter.out.SupplierRepository;
 
 import jakarta.transaction.Transactional;
@@ -42,14 +44,18 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Transactional
     @Override
-    public Optional<Supplier> getSupplierById(String id) {
-        return supplierRepository.findById(id);
+    public Optional<SupplierDTO> getSupplierById(String id) {
+        return supplierRepository.findById(id).map(this::toDto);
     }
 
     @Transactional
     @Override
-    public List<Supplier> fetchSuppliersList() {
-        return supplierRepository.findAll();
+    public List<SupplierDTO> fetchSuppliersList() {
+        return supplierRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    private SupplierDTO toDto(Supplier supplier) {
+        return new SupplierDTO(supplier);
     }
 
 }

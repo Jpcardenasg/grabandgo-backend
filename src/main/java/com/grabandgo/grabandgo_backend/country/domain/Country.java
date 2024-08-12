@@ -2,7 +2,6 @@ package com.grabandgo.grabandgo_backend.country.domain;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grabandgo.grabandgo_backend.region.domain.Region;
 

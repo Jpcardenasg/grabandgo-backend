@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.product.domain.Product;
+import com.grabandgo.grabandgo_backend.product.domain.DTO.ProductDTO;
 
 public interface ProductService {
 
@@ -13,8 +14,8 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    Optional<Product> getProductById(Long id);
+    Optional<ProductDTO> getProductById(Long id);
 
-    List<Product> fetchProductsList();
+    List<ProductDTO> fetchProductsList();
 
 }

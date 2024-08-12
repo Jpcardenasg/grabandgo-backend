@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.orderStatus.application;
 import java.util.List;
 
 import com.grabandgo.grabandgo_backend.orderStatus.domain.OrderStatus;
+import com.grabandgo.grabandgo_backend.orderStatus.domain.DTO.OrderStatusDTO;
 
 public interface OrderStatusService {
 
@@ -12,8 +13,8 @@ public interface OrderStatusService {
 
     void deleteOrderStatus(Long id);
 
-    OrderStatus getOrderStatusById(Long id);
+    OrderStatusDTO getOrderStatusById(Long id);
 
-    List<OrderStatus> fetchOrderStatusesList();
+    List<OrderStatusDTO> fetchOrderStatusesList();
 
 }

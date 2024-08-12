@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
+import com.grabandgo.grabandgo_backend.supplier.domain.DTO.SupplierDTO;
 
 public interface SupplierService {
 
@@ -13,8 +14,8 @@ public interface SupplierService {
 
     void deleteSupplier(String id);
 
-    Optional<Supplier> getSupplierById(String id);
+    Optional<SupplierDTO> getSupplierById(String id);
 
-    List<Supplier> fetchSuppliersList();
+    List<SupplierDTO> fetchSuppliersList();
 
 }

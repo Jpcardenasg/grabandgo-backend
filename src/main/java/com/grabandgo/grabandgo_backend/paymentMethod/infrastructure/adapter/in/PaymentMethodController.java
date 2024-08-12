@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.paymentMethod.application.PaymentMethodService;
 import com.grabandgo.grabandgo_backend.paymentMethod.domain.PaymentMethod;
+import com.grabandgo.grabandgo_backend.paymentMethod.domain.DTO.PaymentMethodDTO;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Validated
 @RestController
@@ -48,7 +50,13 @@ public class PaymentMethodController {
     }
 
     @GetMapping("/allPaymentMethods")
-    public ResponseEntity<List<PaymentMethod>> findAll() {
+    public ResponseEntity<List<PaymentMethodDTO>> findAll() {
         return ResponseEntity.ok(service.fetchPaymentMethodsList());
     }
+
+    @GetMapping("/getPaymentMethod/{id}")
+    public ResponseEntity<PaymentMethodDTO> getPaymentMethod(@RequestParam Long id) {
+        return ResponseEntity.ok(service.getPaymentMethodById(id));
+    }
+
 }

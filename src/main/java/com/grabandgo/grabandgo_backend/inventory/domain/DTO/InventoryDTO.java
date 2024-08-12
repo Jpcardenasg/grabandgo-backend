@@ -1,11 +1,12 @@
 package com.grabandgo.grabandgo_backend.inventory.domain.DTO;
 
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
-import com.grabandgo.grabandgo_backend.product.domain.Product;
+import lombok.Data;
 
 /**
  * InventaryDTO
  */
+@Data
 public class InventoryDTO {
 
     private Long id;

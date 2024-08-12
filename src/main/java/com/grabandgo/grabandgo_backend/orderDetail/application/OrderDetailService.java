@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.orderDetail.application;
 import java.util.List;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.ProductOrderPk;
+import com.grabandgo.grabandgo_backend.orderDetail.domain.DTO.OrderDetailDTO;
 
 public interface OrderDetailService {
 
@@ -12,7 +13,7 @@ public interface OrderDetailService {
 
     void deleteOrderDetail(ProductOrderPk id);
 
-    OrderDetail getOrderDetailById(ProductOrderPk id);
+    OrderDetailDTO getOrderDetailById(ProductOrderPk id);
 
-    List<OrderDetail> fetchOrderDetailsList();
+    List<OrderDetailDTO> fetchOrderDetailsList();
 }

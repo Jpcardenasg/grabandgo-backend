@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.grabandgo.grabandgo_backend.orderDetail.application.OrderDetailService;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.ProductOrderPk;
+import com.grabandgo.grabandgo_backend.orderDetail.domain.DTO.OrderDetailDTO;
 
 @Validated
 @RestController
@@ -49,8 +50,13 @@ public class OrderDetailController {
     }
 
     @GetMapping("/allOrderDetails")
-    public ResponseEntity<List<OrderDetail>> findAll() {
+    public ResponseEntity<List<OrderDetailDTO>> findAll() {
         return ResponseEntity.ok(service.fetchOrderDetailsList());
+    }
+
+    @GetMapping("/getOrderDetail/{id}")
+    public ResponseEntity<OrderDetailDTO> getOrderDetail(@PathVariable ProductOrderPk id) {
+        return ResponseEntity.ok(service.getOrderDetailById(id));
     }
 
 }
