@@ -54,18 +54,19 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id).map(this::toDto);
     }
 
-    private CustomerDTO toDto(Customer customer){
+    private CustomerDTO toDto(Customer customer) {
         return CustomerDTO.builder()
-            .id(customer.getId())
-            .name(customer.getName())
-            .lastName(customer.getLastName())
-            .address(customer.getAddress())
-            .postalCode(customer.getPostalCode())
-            .city_id(customer.getCity().getId())
-            .contactsCustomer(customer.getContactsCustomer())
-            .employee_id(customer.getEmployee().getId())
-            .orders(customer.getOrders())
-            .user_id(customer.getUser().getId())
-            .build();
+                .id(customer.getId())
+                .name(customer.getName())
+                .lastName(customer.getLastName())
+                .address(customer.getAddress())
+                .postalCode(customer.getPostalCode())
+                .city_id(customer.getCity().getId())
+                .contactsCustomer(customer.getContactsCustomer())
+                .employee_id(customer.getEmployee() != null ? customer.getEmployee().getId() : null)
+                .orders(customer.getOrders())
+                .user_id(customer.getUser() != null ? customer.getUser().getId()
+                        : null)
+                .build();
     }
 }

@@ -31,8 +31,8 @@ public class EmployeeDTO {
         extension = employee.getExtencion();
         position = employee.getPosition();
         employees = employee.getEmployees();
-        boss = employee.getBoss().getId();
-        office = employee.getOffice().getId();
-        user = employee.getUser().getId();
+        boss = employee.getBoss() != null ? employee.getBoss().getId() : null;
+        office = employee.getOffice() != null ? employee.getOffice().getId() : null;
+        user = employee.getUser() != null ? employee.getUser().getId() : null;
     }
 }
