@@ -1,6 +1,6 @@
 package com.grabandgo.grabandgo_backend.auth.model;
 
-import com.grabandgo.grabandgo_backend.city.domain.DTO.City;
+import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.phone.domain.Phone;
 
 import lombok.AllArgsConstructor;

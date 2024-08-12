@@ -1,4 +1,4 @@
-package com.grabandgo.grabandgo_backend.city.domain.DTO;
+package com.grabandgo.grabandgo_backend.city.domain;
 
 import java.util.List;
 
