@@ -57,7 +57,7 @@ El sistema cubre una variedad de casos de uso que permiten a los administradores
 
 ### **MODELO RELACIONAL**
 
-<!-- ![image](grabandgo.png) -->
+<!-- ![image](GRABGO.png) -->
 
 **DDL**
 
