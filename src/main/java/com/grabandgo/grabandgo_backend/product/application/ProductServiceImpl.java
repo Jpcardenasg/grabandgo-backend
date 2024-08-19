@@ -63,7 +63,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
 
         return product;
     }
@@ -74,8 +73,7 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
         productDTO.setName(product.getName());
-        productDTO.setDescription(product.getDescription());
-        productDTO.setProductGamma_id(product.getProductGamma().getId());
+
 
         return productDTO;
     }
