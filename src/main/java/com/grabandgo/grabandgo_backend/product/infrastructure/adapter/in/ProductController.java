@@ -7,7 +7,6 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +28,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/product")
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @PostMapping("/saveProduct")
-    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product) {
-        service.saveProduct(product);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody ProductDTO product) {
+        Product newProduct = service.convertToEntity(product);
+        service.saveProduct(newProduct);
+        return ResponseEntity.ok(newProduct);
     }
 
     @PutMapping("/updateProduct/{productId}")

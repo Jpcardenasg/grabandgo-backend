@@ -8,14 +8,18 @@ import com.grabandgo.grabandgo_backend.product.domain.DTO.ProductDTO;
 
 public interface ProductService {
 
-    Product saveProduct(Product entity);
+    void saveProduct(Product entity);
 
-    Product updateProduct(Long id, Product entity);
+    void updateProduct(Long id, Product entity);
 
     void deleteProduct(Long id);
 
-    Optional<ProductDTO> getProductById(Long id);
+    Optional<Product> getProductById(Long id);
 
-    List<ProductDTO> fetchProductsList();
+    List<Product> fetchProductsList();
+
+    Product convertToEntity(ProductDTO productDTO);
+
+    ProductDTO convertToDTO(Product product);
 
 }

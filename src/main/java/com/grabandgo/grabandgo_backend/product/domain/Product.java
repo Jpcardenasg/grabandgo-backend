@@ -3,26 +3,22 @@ package com.grabandgo.grabandgo_backend.product.domain;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
 import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
-import com.grabandgo.grabandgo_backend.productGamma.domain.ProductGamma;
+import com.grabandgo.grabandgo_backend.productDetail.domain.ProductDetail;
 import com.grabandgo.grabandgo_backend.supplier.domain.Supplier;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
@@ -31,23 +27,23 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String name;
-    private String description;
     private Double sellPrice;
     private Double supplierPrice;
-    private String img;
 
-    @JsonBackReference(value = "productGamma-product")
-    @ManyToOne
-    @JoinColumn(name = "productGamaId")
-    private ProductGamma productGamma;
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+    private ProductDetail productDetail;
 
-    @JsonBackReference(value = "supplier-product")
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "product")
+    private Inventory inventory;
+
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "supplierNit")
     private Supplier supplier;
 
-    @JsonBackReference("details-product")
+    @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @Nullable
-    private List<OrderDetail> details;
+    private List<OrderDetail> orderDetails;
 }

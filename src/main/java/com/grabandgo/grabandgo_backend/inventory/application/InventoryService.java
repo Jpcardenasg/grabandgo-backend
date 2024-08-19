@@ -6,18 +6,19 @@ import java.util.Optional;
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
 import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
 
-/**
- * InventaryService
- */
 public interface InventoryService {
 
-    Inventory saveInventory(Inventory inventory);
+    void saveInventory(Inventory inventory);
 
-    Inventory updateInventory(Long id, Inventory inventory);
+    void updateInventory(Long id, Inventory inventory);
 
     void deleteInventory(Long id);
 
-    List<InventoryDTO> findAll();
+    List<Inventory> findAll();
 
-    Optional<InventoryDTO> findById(Long id);
+    Optional<Inventory> findById(Long id);
+
+    InventoryDTO convertToDTO(Inventory inventory);
+
+    Inventory convertToEntity(InventoryDTO inventoryDTO);
 }

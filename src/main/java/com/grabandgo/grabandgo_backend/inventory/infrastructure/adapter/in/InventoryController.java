@@ -2,11 +2,11 @@ package com.grabandgo.grabandgo_backend.inventory.infrastructure.adapter.in;
 
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,42 +21,86 @@ import com.grabandgo.grabandgo_backend.inventory.application.InventoryService;
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
 import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
 
-/**
- * InventaryAdapter
- */
 @Validated
 @RestController
 @RequestMapping("/api/inventory")
 public class InventoryController {
-    @Autowired
-    private InventoryService service;
+    private final InventoryService service;
+
+    public InventoryController(InventoryService service) {
+        this.service = service;
+    }
 
     @PostMapping("/saveInventory")
-    public ResponseEntity<Inventory> saveInventory(@Valid @RequestBody Inventory inventory) {
-        service.saveInventory(inventory);
-        return ResponseEntity.ok(inventory);
+    public ResponseEntity<InventoryDTO> saveInventory(@Valid @RequestBody InventoryDTO inventoryDTO) {
+        try {
+            Inventory inventory = service.convertToEntity(inventoryDTO);
+            service.saveInventory(inventory);
+
+            InventoryDTO response = service.convertToDTO(inventory);
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/updateInventory/{inventoryId}")
-    public ResponseEntity<Inventory> updateInventory(@PathVariable Long inventoryId,
-            @Valid @RequestBody Inventory inventory) {
-        service.updateInventory(inventoryId, inventory);
-        return ResponseEntity.ok(inventory);
+    public ResponseEntity<InventoryDTO> updateInventory(@PathVariable Long inventoryId,
+            @Valid @RequestBody InventoryDTO inventoryDTO) {
+
+        try {
+            Inventory inventory = service.convertToEntity(inventoryDTO);
+            service.updateInventory(inventoryId, inventory);
+
+            InventoryDTO response = service.convertToDTO(inventory);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/deleteInventory/{inventoryId}")
-    public ResponseEntity<Long> deleteInventory(@PathVariable Long inventoryId) {
-        service.deleteInventory(inventoryId);
-        return ResponseEntity.ok(inventoryId);
+    public ResponseEntity<Void> deleteInventory(@PathVariable Long inventoryId) {
+
+        try {
+            service.deleteInventory(inventoryId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/allInventories")
     public ResponseEntity<List<InventoryDTO>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+        try {
+            List<Inventory> inventories = service.findAll();
+            List<InventoryDTO> inventoryDTOs = inventories.stream()
+                    .map(service::convertToDTO)
+                    .toList();
+
+            return ResponseEntity.ok(inventoryDTOs);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @GetMapping("/getInvetory/{id}")
-    public ResponseEntity<InventoryDTO> getInvetoryByid(@PathVariable Long id) {
-        return ResponseEntity.of(service.findById(id));
+    @GetMapping("/getInventory/{id}")
+    public ResponseEntity<InventoryDTO> getInventoryById(@PathVariable Long id) {
+
+        try {
+            Inventory inventory = service.findById(id).orElse(null);
+
+            InventoryDTO response = service.convertToDTO(inventory);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

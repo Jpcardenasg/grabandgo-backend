@@ -1,37 +1,32 @@
 package com.grabandgo.grabandgo_backend.product.domain.DTO;
 
+import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
+import com.grabandgo.grabandgo_backend.orderDetail.domain.DTO.OrderDetailDTO;
+import com.grabandgo.grabandgo_backend.productDetail.domain.DTO.ProductDetailDTO;
+import com.grabandgo.grabandgo_backend.supplier.domain.DTO.SupplierDTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-import com.grabandgo.grabandgo_backend.orderDetail.domain.OrderDetail;
-import com.grabandgo.grabandgo_backend.product.domain.Product;
-
-import lombok.Data;
-
-/**
- * ProductDTO
- */
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class ProductDTO {
 
     private Long id;
     private String name;
-    private String description;
     private Double sellPrice;
     private Double supplierPrice;
-    private String img;
-    private Long productGamma_id;
-    private String supplier_nit;
-    private List<OrderDetail> details;
 
-    public ProductDTO(Product p) {
-        id = p.getId();
-        name = p.getName();
-        description = p.getDescription();
-        sellPrice = p.getSellPrice();
-        supplierPrice = p.getSupplierPrice();
-        img = p.getImg();
-        productGamma_id = p.getProductGamma().getId();
-        supplier_nit = p.getSupplier().getNit();
-        details = p.getDetails();
-    }
+    private ProductDetailDTO productDetail;
+
+    private InventoryDTO inventory;
+
+    private SupplierDTO supplier;
+
+    private List<OrderDetailDTO> orderDetails;
+
 }

@@ -16,21 +16,24 @@ import jakarta.transaction.Transactional;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
-    @Transactional
-    @Override
-    public Product saveProduct(Product product) {
-        return productRepository.save(product);
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 
     @Transactional
     @Override
-    public Product updateProduct(Long id, Product product) {
+    public void saveProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    @Transactional
+    @Override
+    public void updateProduct(Long id, Product product) {
         if (productRepository.existsById(id)) {
             product.setId(id);
-            return productRepository.save(product);
+            productRepository.save(product);
         } else {
             throw new RuntimeException("Product not found with id: " + id);
         }
@@ -44,17 +47,37 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public Optional<ProductDTO> getProductById(Long id) {
-        return productRepository.findById(id).map(this::toDto);
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 
     @Transactional
     @Override
-    public List<ProductDTO> fetchProductsList() {
-        return productRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    public List<Product> fetchProductsList() {
+        return productRepository.findAll();
     }
 
-    private ProductDTO toDto(Product pd){
-        return new ProductDTO(pd);
+    @Override
+    public Product convertToEntity(ProductDTO productDTO) {
+
+        Product product = new Product();
+        product.setId(productDTO.getId());
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+
+        return product;
     }
+
+    @Override
+    public ProductDTO convertToDTO(Product product) {
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(product.getId());
+        productDTO.setName(product.getName());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setProductGamma_id(product.getProductGamma().getId());
+
+        return productDTO;
+    }
+
 }

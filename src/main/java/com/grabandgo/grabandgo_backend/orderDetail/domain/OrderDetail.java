@@ -20,19 +20,16 @@ public class OrderDetail {
 
     @EmbeddedId
     private ProductOrderPk id;
-
-    @JsonBackReference("details-product")
-    @ManyToOne
-    @JoinColumn(name = "productId", insertable = false, updatable = false)
-    private Product product;
-
-    @JsonBackReference("order-details")
-    @ManyToOne
-    @JoinColumn(name = "orderId", insertable = false, updatable = false)
-    private Order order;
-
     private Long quantity;
     private Double unitPrice;
     private Integer lineNumber;
+
+    @JsonBackReference
+    @ManyToOne
+    private Product product;
+
+    @JsonBackReference
+    @ManyToOne
+    private Order order;
 
 }

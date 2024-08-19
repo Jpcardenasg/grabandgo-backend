@@ -2,9 +2,9 @@ package com.grabandgo.grabandgo_backend.inventory.application;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.grabandgo.grabandgo_backend.product.domain.Product;
+import com.grabandgo.grabandgo_backend.product.infrastructure.adapter.out.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
@@ -13,27 +13,29 @@ import com.grabandgo.grabandgo_backend.inventory.infrastructure.adapter.out.Inve
 
 import jakarta.transaction.Transactional;
 
-/**
- * InventoryServiceImpl
- */
 @Service
 public class InventoryServiceImpl implements InventoryService {
 
-    @Autowired
-    InventoryRepository inventoryRepository;
+    private final InventoryRepository inventoryRepository;
+    private final ProductRepository productRepository;
 
-    @Transactional
-    @Override
-    public Inventory saveInventory(Inventory inventory) {
-        return inventoryRepository.save(inventory);
+    public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductRepository productRepository) {
+        this.inventoryRepository = inventoryRepository;
+        this.productRepository = productRepository;
     }
 
     @Transactional
     @Override
-    public Inventory updateInventory(Long id, Inventory inventory) {
+    public void saveInventory(Inventory inventory) {
+        inventoryRepository.save(inventory);
+    }
+
+    @Transactional
+    @Override
+    public void updateInventory(Long id, Inventory inventory) {
         if (inventoryRepository.existsById(id)) {
             inventory.setId(id);
-            return inventoryRepository.save(inventory);
+            inventoryRepository.save(inventory);
         } else {
             throw new RuntimeException("inventory not found with id: " + id);
         }
@@ -47,18 +49,42 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Transactional
     @Override
-    public List<InventoryDTO> findAll() {
-        return inventoryRepository.findAll().stream().map(this::tDto).collect(Collectors.toList());
+    public List<Inventory> findAll() {
+        return inventoryRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Optional<InventoryDTO> findById(Long id) {
-        return inventoryRepository.findById(id).map(this::tDto);
+    public Optional<Inventory> findById(Long id) {
+        return inventoryRepository.findById(id);
     }
 
-    private InventoryDTO tDto(Inventory inv) {
-        return new InventoryDTO(inv);
+    @Override
+    public InventoryDTO convertToDTO(Inventory inventory) {
+
+        InventoryDTO inventoryDTO = new InventoryDTO();
+        inventoryDTO.setId(inventory.getId());
+        inventoryDTO.setMinStock(inventory.getMinStock());
+        inventoryDTO.setMaxStock(inventory.getMaxStock());
+        inventoryDTO.setCurrentStock(inventory.getCurrentStock());
+        inventoryDTO.setProductId(inventory.getProduct().getId());
+
+        return inventoryDTO;
+    }
+
+    @Override
+    public Inventory convertToEntity(InventoryDTO inventoryDTO) {
+
+        Inventory inventory = new Inventory();
+        inventory.setId(inventoryDTO.getId());
+        inventory.setMinStock(inventoryDTO.getMinStock());
+        inventory.setMaxStock(inventoryDTO.getMaxStock());
+        inventory.setCurrentStock(inventoryDTO.getCurrentStock());
+
+        Product product = productRepository.findById(inventoryDTO.getProductId()).orElse(null);
+        inventory.setProduct(product);
+
+        return inventory;
     }
 
 }

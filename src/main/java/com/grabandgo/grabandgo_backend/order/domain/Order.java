@@ -34,18 +34,16 @@ public class Order {
     private Date shippingDate;
     private Date estimatedDeliveryDate;
 
-    @JsonBackReference(value = "oderstastus-order")
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "orderStatusId")
     private OrderStatus status;
 
-    @JsonManagedReference("order-details")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
-    private List<OrderDetail> details;
+    private List<OrderDetail> orderDetails;
 
-    @JsonBackReference(value = "customer-order")
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "customerId")
     private Customer customer;
 
 }
