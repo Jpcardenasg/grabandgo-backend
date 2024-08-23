@@ -1,25 +1,24 @@
 package com.grabandgo.grabandgo_backend.city.application;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.city.domain.DTO.CityDTO;
 
-/**
- * CityService
- */
+import java.util.List;
+import java.util.Optional;
+
 public interface CityService {
 
-    City saveCity(City city);
+    void saveCity(CityDTO cityDTO);
 
-    City updateCity(Long id, City city);
+    void updateCity(Long id, CityDTO cityDTO);
 
     void deleteCity(Long id);
 
-    List<CityDTO> findAll();
+    List<CityDTO> findAllCities();
 
-    List<CityDTO> findAllView();
+    Optional<CityDTO> findCityById(Long id);
 
-    Optional<CityDTO> findById(Long id);
+    CityDTO toDTO(City city);
+
+    City toEntity(CityDTO cityDTO);
 }

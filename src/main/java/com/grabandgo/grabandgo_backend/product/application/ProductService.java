@@ -14,12 +14,12 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    Optional<Product> getProductById(Long id);
+    Optional<Product> findProductById(Long id);
 
-    List<Product> fetchProductsList();
+    List<Product> findAllProducts();
 
-    Product convertToEntity(ProductDTO productDTO);
+    Product toEntity(ProductDTO productDTO);
 
-    ProductDTO convertToDTO(Product product);
+    ProductDTO toDTO(Product product);
 
 }

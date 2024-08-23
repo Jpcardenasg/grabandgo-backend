@@ -1,35 +1,43 @@
 package com.grabandgo.grabandgo_backend.region.application;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.grabandgo.grabandgo_backend.region.domain.Region;
+import com.grabandgo.grabandgo_backend.country.application.CountryService;
+import com.grabandgo.grabandgo_backend.country.domain.Country;
+import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 import com.grabandgo.grabandgo_backend.region.domain.DTO.RegionDTO;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
 import com.grabandgo.grabandgo_backend.region.infrastructure.adapter.out.RegionRepository;
+import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class RegionServiceImpl implements RegionService {
 
-    @Autowired
-    private RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
+    private final CountryService countryService;
 
-    @Transactional
-    @Override
-    public Region saveRegion(Region region) {
-        return regionRepository.save(region);
+    public RegionServiceImpl(RegionRepository regionRepository, CountryService countryService) {
+        this.regionRepository = regionRepository;
+        this.countryService = countryService;
     }
 
     @Transactional
     @Override
-    public Region updateRegion(Long id, Region region) {
+    public void saveRegion(RegionDTO regionDTO) {
+        Region region = toEntity(regionDTO);
+        regionRepository.save(region);
+    }
+
+    @Transactional
+    @Override
+    public void updateRegion(Long id, RegionDTO regionDTO) {
         if (regionRepository.existsById(id)) {
+            Region region = toEntity(regionDTO);
             region.setId(id);
-            return regionRepository.save(region);
+            regionRepository.save(region);
         } else {
             throw new RuntimeException("Region not found with id: " + id);
         }
@@ -43,26 +51,43 @@ public class RegionServiceImpl implements RegionService {
 
     @Transactional
     @Override
-    public Region getRegionById(Long id) {
-        return regionRepository.findById(id).orElse(null);
+    public Optional<RegionDTO> findRegionById(Long id) {
+        return regionRepository.findById(id).map(this::toDTO);
     }
 
     @Transactional
     @Override
-    public List<Region> fetchRegionsList() {
-        return regionRepository.findAll();
+    public List<RegionDTO> findAllRegions() {
+        return regionRepository.findAll().stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    @Transactional
     @Override
-    public List<RegionDTO> fetchRegionsListView() {
-        return regionRepository.findAll().stream().map(this::regionToDto).collect(Collectors.toList());
+    public Region toEntity(RegionDTO regionDTO) {
+
+        Region region = new Region();
+        region.setId(regionDTO.getId());
+        region.setName(regionDTO.getName());
+
+        CountryDTO countryDTO = countryService.findCountryById(regionDTO.getCountryId()).orElse(null);
+        Country country = countryService.toEntity(countryDTO);
+        region.setCountry(country);
+
+        return region;
     }
 
-    private RegionDTO regionToDto(Region region) {
-        new RegionDTO();
-        return RegionDTO.builder().id(region.getId()).countryId(region.getCountry().getId())
-                .name(region.getName()).build();
+    @Override
+    public RegionDTO toDTO(Region region) {
+
+        RegionDTO regionDTO = new RegionDTO();
+        regionDTO.setId(region.getId());
+        regionDTO.setName(region.getName());
+        regionDTO.setCountryId(region.getCountry().getId());
+        regionDTO.setCountryName(region.getCountry().getName());
+
+        return regionDTO;
     }
 
 }
+

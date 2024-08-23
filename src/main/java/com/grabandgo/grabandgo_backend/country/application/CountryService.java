@@ -1,25 +1,24 @@
 package com.grabandgo.grabandgo_backend.country.application;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.grabandgo.grabandgo_backend.country.domain.Country;
 import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 
-/**
- * CountryService
- */
+import java.util.List;
+import java.util.Optional;
 
 public interface CountryService {
-    Country saveCountry(Country country);
 
-    Country updateCountry(Long id, Country country);
+    void saveCountry(CountryDTO countryDTO);
+
+    void updateCountry(Long id, CountryDTO countryDTO);
 
     void deleteCountry(Long id);
 
-    List<CountryDTO> findAll();
+    List<CountryDTO> findAllCountries();
 
-    Optional<CountryDTO> findById(Long id);
+    Optional<CountryDTO> findCountryById(Long id);
 
-    List<CountryDTO> findAllView();
+    CountryDTO toDTO(Country country);
+
+    Country toEntity(CountryDTO countryDTO);
 }

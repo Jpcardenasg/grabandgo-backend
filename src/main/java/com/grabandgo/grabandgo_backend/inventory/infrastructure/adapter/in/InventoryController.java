@@ -33,12 +33,11 @@ public class InventoryController {
 
     @PostMapping("/saveInventory")
     public ResponseEntity<InventoryDTO> saveInventory(@Valid @RequestBody InventoryDTO inventoryDTO) {
+
         try {
-            Inventory inventory = service.convertToEntity(inventoryDTO);
+            Inventory inventory = service.toEntity(inventoryDTO);
             service.saveInventory(inventory);
-
-            InventoryDTO response = service.convertToDTO(inventory);
-
+            InventoryDTO response = service.toDTO(inventory);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (Exception e) {
@@ -51,11 +50,9 @@ public class InventoryController {
             @Valid @RequestBody InventoryDTO inventoryDTO) {
 
         try {
-            Inventory inventory = service.convertToEntity(inventoryDTO);
+            Inventory inventory = service.toEntity(inventoryDTO);
             service.updateInventory(inventoryId, inventory);
-
-            InventoryDTO response = service.convertToDTO(inventory);
-
+            InventoryDTO response = service.toDTO(inventory);
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
@@ -69,6 +66,7 @@ public class InventoryController {
         try {
             service.deleteInventory(inventoryId);
             return ResponseEntity.noContent().build();
+
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -77,12 +75,12 @@ public class InventoryController {
     @GetMapping("/allInventories")
     public ResponseEntity<List<InventoryDTO>> findAll() {
         try {
-            List<Inventory> inventories = service.findAll();
+            List<Inventory> inventories = service.findAllInventories();
             List<InventoryDTO> inventoryDTOs = inventories.stream()
-                    .map(service::convertToDTO)
+                    .map(service::toDTO)
                     .toList();
 
-            return ResponseEntity.ok(inventoryDTOs);
+            return new ResponseEntity<>(inventoryDTOs, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -90,17 +88,15 @@ public class InventoryController {
     }
 
     @GetMapping("/getInventory/{id}")
-    public ResponseEntity<InventoryDTO> getInventoryById(@PathVariable Long id) {
+    public ResponseEntity<InventoryDTO> findInventoryById(@PathVariable Long id) {
 
         try {
-            Inventory inventory = service.findById(id).orElse(null);
-
-            InventoryDTO response = service.convertToDTO(inventory);
-
-            return ResponseEntity.ok(response);
+            Inventory inventory = service.findInventoryById(id).orElse(null);
+            InventoryDTO response = service.toDTO(inventory);
+            return new ResponseEntity<>(response, HttpStatus.OK);
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -1,23 +1,25 @@
 package com.grabandgo.grabandgo_backend.user.application;
 
+import com.grabandgo.grabandgo_backend.user.domain.DTO.UserDTO;
+import com.grabandgo.grabandgo_backend.user.domain.DTO.UserRegistrationDTO;
+import com.grabandgo.grabandgo_backend.user.domain.User;
+
 import java.util.List;
 import java.util.Optional;
 
-import com.grabandgo.grabandgo_backend.user.domain.User;
-
-/**
- * UserService
- */
 public interface UserService {
 
-    User saveUser(User user);
+    void saveUser(UserRegistrationDTO userDTO);
 
-    User updateUser(Long id, User user);
+    void updateUser(Long id, UserRegistrationDTO userDTO);
 
     void deleteUser(Long id);
 
-    Optional<User> findById(Long id);
+    List<UserDTO> findAllUsers();
 
-    List<User> findAll();
+    Optional<UserDTO> findUserById(Long id);
 
+    UserDTO toDTO(User user);
+
+    User toEntity(UserRegistrationDTO userRegistrationDTO);
 }

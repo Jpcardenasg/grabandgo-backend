@@ -3,8 +3,8 @@ package com.grabandgo.grabandgo_backend.inventory.application;
 import java.util.List;
 import java.util.Optional;
 
+import com.grabandgo.grabandgo_backend.product.application.ProductService;
 import com.grabandgo.grabandgo_backend.product.domain.Product;
-import com.grabandgo.grabandgo_backend.product.infrastructure.adapter.out.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
@@ -17,11 +17,11 @@ import jakarta.transaction.Transactional;
 public class InventoryServiceImpl implements InventoryService {
 
     private final InventoryRepository inventoryRepository;
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductRepository productRepository) {
+    public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductService productService) {
         this.inventoryRepository = inventoryRepository;
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     @Transactional
@@ -37,7 +37,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setId(id);
             inventoryRepository.save(inventory);
         } else {
-            throw new RuntimeException("inventory not found with id: " + id);
+            throw new RuntimeException("Inventory not found with id: " + id);
         }
     }
 
@@ -49,18 +49,18 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Transactional
     @Override
-    public List<Inventory> findAll() {
+    public List<Inventory> findAllInventories() {
         return inventoryRepository.findAll();
     }
 
     @Transactional
     @Override
-    public Optional<Inventory> findById(Long id) {
+    public Optional<Inventory> findInventoryById(Long id) {
         return inventoryRepository.findById(id);
     }
 
     @Override
-    public InventoryDTO convertToDTO(Inventory inventory) {
+    public InventoryDTO toDTO(Inventory inventory) {
 
         InventoryDTO inventoryDTO = new InventoryDTO();
         inventoryDTO.setId(inventory.getId());
@@ -73,7 +73,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Inventory convertToEntity(InventoryDTO inventoryDTO) {
+    public Inventory toEntity(InventoryDTO inventoryDTO) {
 
         Inventory inventory = new Inventory();
         inventory.setId(inventoryDTO.getId());
@@ -81,7 +81,7 @@ public class InventoryServiceImpl implements InventoryService {
         inventory.setMaxStock(inventoryDTO.getMaxStock());
         inventory.setCurrentStock(inventoryDTO.getCurrentStock());
 
-        Product product = productRepository.findById(inventoryDTO.getProductId()).orElse(null);
+        Product product = productService.findProductById(inventoryDTO.getProductId()).orElse(null);
         inventory.setProduct(product);
 
         return inventory;

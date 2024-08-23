@@ -16,20 +16,16 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-/**
- * City
- */
-@Data
+
+@Entity
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class City {
 
     @Id
@@ -37,23 +33,22 @@ public class City {
     private Long id;
     private String name;
 
-    @JsonBackReference(value = "region-city")
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "regionId")
     private Region region;
 
-    @JsonManagedReference(value = "city-customers")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
     private List<Customer> customers;
 
-    @JsonManagedReference(value = "city-offices")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
     private List<Office> offices;
 
-    @JsonManagedReference(value = "city-branches")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "city")
     @Nullable
-    private List<Branch> branchs;
+    private List<Branch> branches;
 }

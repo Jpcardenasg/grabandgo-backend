@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grabandgo.grabandgo_backend.customer.application.CustomerService;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
-import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerDTO;
+import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerRegistrationDTO;
 
 @Validated
 @RestController
@@ -49,12 +49,12 @@ public class CustomerController {
     }
 
     @GetMapping("/allCustomers")
-    public ResponseEntity<List<CustomerDTO>> findAll() {
+    public ResponseEntity<List<CustomerRegistrationDTO>> findAll() {
         return ResponseEntity.ok(service.fetchCustomersList());
     }
 
     @GetMapping("/getCustomer/{id}")
-    public ResponseEntity<CustomerDTO> getCustomerByid(@PathVariable String id) {
+    public ResponseEntity<CustomerRegistrationDTO> getCustomerByid(@PathVariable String id) {
         return ResponseEntity.of(service.findById(id));
     }
 }

@@ -12,17 +12,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-/**
- * Country
- */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Country {
 
     @Id
@@ -30,7 +27,7 @@ public class Country {
     private Long id;
     private String name;
 
-    @JsonManagedReference(value = "country-region")
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "country")
     private List<Region> regions;
 }

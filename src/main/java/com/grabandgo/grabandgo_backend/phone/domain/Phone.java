@@ -1,6 +1,5 @@
 package com.grabandgo.grabandgo_backend.phone.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,19 +14,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Phone {
 
     @Id
@@ -36,19 +31,13 @@ public class Phone {
     private Long prefix;
     private Long number;
 
-    @JsonBackReference(value = "phone-phonetype")
     @ManyToOne
-    @JoinColumn(name = "phoneTypeId")
     private PhoneType phoneType;
 
-    @JsonManagedReference(value = "contact-phone")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
-    @Builder.Default
-    private List<CustomerContact> customerContacts = new ArrayList<>();
+    private List<CustomerContact> customerContacts;
 
-    @JsonManagedReference(value = "phone-suplppierContact")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "phone")
-    @Builder.Default
-    private List<SupplierContact> supplierContacts = new ArrayList<>();
+    private List<SupplierContact> supplierContacts;
 
 }

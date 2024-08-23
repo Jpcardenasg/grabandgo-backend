@@ -2,22 +2,54 @@ package com.grabandgo.grabandgo_backend.customer.application;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.grabandgo.grabandgo_backend.city.application.CityService;
+import com.grabandgo.grabandgo_backend.city.domain.City;
+import com.grabandgo.grabandgo_backend.city.domain.DTO.CityDTO;
 import com.grabandgo.grabandgo_backend.customer.domain.Customer;
 import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerDTO;
+import com.grabandgo.grabandgo_backend.customer.domain.DTO.CustomerRegistrationDTO;
 import com.grabandgo.grabandgo_backend.customer.infrastructure.adapter.out.CustomerRepository;
+import com.grabandgo.grabandgo_backend.phone.application.PhoneService;
+import com.grabandgo.grabandgo_backend.phone.domain.Phone;
+import com.grabandgo.grabandgo_backend.user.application.UserService;
+import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+    private final CityService cityService;
+    private final PhoneService phoneService;
+    private final UserService userService;
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, CityService cityService, PhoneService phoneService, UserService userService) {
+        this.customerRepository = customerRepository;
+        this.cityService = cityService;
+        this.phoneService = phoneService;
+        this.userService = userService;
+    }
+
+    @Transactional
+    @Override
+    public void saveCustomer(CustomerRegistrationDTO customerDTO) {
+        Customer customer = toEntity(customerDTO);
+        customerRepository.save(customer);
+    }
+
+    @Transactional
+    @Override
+    public void updateCustomer(String id, CustomerRegistrationDTO customerDTO) {
+        if (customerRepository.existsById(id)) {
+            Customer customer = toEntity(customerDTO);
+            customer.setId(id);
+            customerRepository.save(customer);
+        } else {
+            throw new RuntimeException("Customer not found with id: " + id);
+        }
+    }
 
     @Transactional
     @Override
@@ -27,46 +59,55 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Transactional
     @Override
-    public List<CustomerDTO> fetchCustomersList() {
-        return customerRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+    public Optional<CustomerDTO> findCustomerById(String id) {
+        return customerRepository.findById(id).map(this::toDTO);
     }
 
     @Transactional
     @Override
-    public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public List<CustomerDTO> findAllCustomers() {
+        return customerRepository.findAll().stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    @Transactional
     @Override
-    public Customer updateCustomer(String id, Customer customer) {
-        if (customerRepository.existsById(id)) {
-            customer.setId(id);
-            return customerRepository.save(customer);
-        } else {
-            throw new RuntimeException("customer not found with id: " + id);
-        }
+    public Customer toEntity(CustomerRegistrationDTO customerDTO) {
+
+        Customer customer = new Customer();
+        customer.setId(customerDTO.getId());
+        customer.setName(customerDTO.getName());
+        customer.setLastName(customerDTO.getLastName());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setPostalCode(customerDTO.getPostalCode());
+
+        CityDTO cityDTO = cityService.findCityById(customerDTO.getCityId()).orElse(null);
+        City city = cityService.toEntity(cityDTO);
+
+        customer.setCity(city);
+        customer.setUser(userService.toEntity(customerDTO.getUser()));
+
+        return customer;
     }
 
-    @Transactional
     @Override
-    public Optional<CustomerDTO> findById(String id) {
-        return customerRepository.findById(id).map(this::toDto);
+    public CustomerDTO toDTO(Customer customer) {
+
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(customer.getId());
+        customerDTO.setName(customer.getName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setAddress(customer.getAddress());
+        customerDTO.setPostalCode(customer.getPostalCode());
+
+        City city = customer.getCity();
+        customerDTO.setCityId(city.getId());
+        customerDTO.setCityName(city.getName());
+
+        Phone phone =
+
+
+        return customerDTO;
     }
 
-    private CustomerDTO toDto(Customer customer) {
-        return CustomerDTO.builder()
-                .id(customer.getId())
-                .name(customer.getName())
-                .lastName(customer.getLastName())
-                .address(customer.getAddress())
-                .postalCode(customer.getPostalCode())
-                .city_id(customer.getCity().getId())
-                .contactsCustomer(customer.getContactsCustomer())
-                .employee_id(customer.getEmployee() != null ? customer.getEmployee().getId() : null)
-                .orders(customer.getOrders())
-                .user_id(customer.getUser() != null ? customer.getUser().getId()
-                        : null)
-                .build();
-    }
 }

@@ -2,25 +2,46 @@ package com.grabandgo.grabandgo_backend.city.application;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.grabandgo.grabandgo_backend.city.domain.City;
 import com.grabandgo.grabandgo_backend.city.domain.DTO.CityDTO;
 import com.grabandgo.grabandgo_backend.city.infrastructure.adapter.out.CityRepository;
+import com.grabandgo.grabandgo_backend.region.application.RegionService;
+import com.grabandgo.grabandgo_backend.region.domain.DTO.RegionDTO;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
+import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
-/**
- * CityServiceImpl
- */
 @Service
 public class CityServiceImpl implements CityService {
 
-    @Autowired
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
+    private final RegionService regionService;
+
+    public CityServiceImpl(CityRepository cityRepository, RegionService regionService) {
+        this.cityRepository = cityRepository;
+        this.regionService = regionService;
+    }
+
+    @Transactional
+    @Override
+    public void saveCity(CityDTO cityDTO) {
+        City city = toEntity(cityDTO);
+        cityRepository.save(city);
+    }
+
+    @Transactional
+    @Override
+    public void updateCity(Long id, CityDTO cityDTO) {
+        if (cityRepository.existsById(id)) {
+            City city = toEntity(cityDTO);
+            city.setId(id);
+            cityRepository.save(city);
+        } else {
+            throw new RuntimeException("City not found with id: " + id);
+        }
+    }
 
     @Transactional
     @Override
@@ -30,40 +51,42 @@ public class CityServiceImpl implements CityService {
 
     @Transactional
     @Override
-    public List<CityDTO> findAll() {
-        return cityRepository.findAll().stream().map(this::cityToDto).collect(Collectors.toList());
+    public Optional<CityDTO> findCityById(Long id) {
+        return cityRepository.findById(id).map(this::toDTO);
     }
 
     @Transactional
     @Override
-    public City saveCity(City city) {
-        return cityRepository.save(city);
-    }
-
-    @Transactional
-    @Override
-    public City updateCity(Long id, City city) {
-        if (cityRepository.existsById(id)) {
-            city.setId(id);
-            return cityRepository.save(city);
-        } else {
-            throw new RuntimeException("city not found with id: " + id);
-        }
-    }
-
-    @Transactional
-    @Override
-    public Optional<CityDTO> findById(Long id) {
-        return Optional.of(cityRepository.findById(id).map(this::cityToDto)).orElse(null);
+    public List<CityDTO> findAllCities() {
+        return cityRepository.findAll().stream()
+                .map(this::toDTO)
+                .toList();
     }
 
     @Override
-    public List<CityDTO> findAllView() {
-        return cityRepository.findAll().stream().map(this::cityToDto).collect(Collectors.toList());
+    public City toEntity(CityDTO cityDTO) {
+
+        City city = new City();
+        city.setId(cityDTO.getId());
+        city.setName(cityDTO.getName());
+
+        RegionDTO regionDTO = regionService.findRegionById(cityDTO.getRegionId()).orElse(null);
+        Region region = regionService.toEntity(regionDTO);
+        city.setRegion(region);
+
+       return city;
     }
 
-    private CityDTO cityToDto(City city) {
-        new CityDTO();
-        return CityDTO.builder().id(city.getId()).name(city.getName()).regionId(city.getRegion().getId()).build();
+    @Override
+    public CityDTO toDTO(City city) {
+
+        CityDTO cityDTO = new CityDTO();
+        cityDTO.setId(city.getId());
+        cityDTO.setName(city.getName());
+        cityDTO.setRegionId(city.getRegion().getId());
+        cityDTO.setRegionName(city.getRegion().getName());
+
+        return cityDTO;
     }
+
 }

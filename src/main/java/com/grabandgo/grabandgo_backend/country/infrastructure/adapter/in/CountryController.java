@@ -1,12 +1,14 @@
 package com.grabandgo.grabandgo_backend.country.infrastructure.adapter.in;
 
+import com.grabandgo.grabandgo_backend.country.application.CountryService;
+import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,51 +19,73 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grabandgo.grabandgo_backend.country.application.CountryService;
-import com.grabandgo.grabandgo_backend.country.domain.Country;
-import com.grabandgo.grabandgo_backend.country.domain.DTO.CountryDTO;
-
-/**
- * CountryAdapter
- */
 @Validated
 @RestController
 @RequestMapping("/api/country")
 public class CountryController {
 
-    @Autowired
-    private CountryService service;
+    private final CountryService service;
+
+    public CountryController(CountryService service) {
+        this.service = service;
+    }
 
     @PostMapping("/saveCountry")
-    public ResponseEntity<Country> saveCountry(@Valid @RequestBody Country country) {
-        service.saveCountry(country);
-        return ResponseEntity.ok(country);
+    public ResponseEntity<CountryDTO> saveCountry(@Valid @RequestBody CountryDTO countryDTO) {
+
+        try {
+            service.saveCountry(countryDTO);
+            return new ResponseEntity<>(countryDTO, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/updateCountry/{countryId}")
-    public ResponseEntity<Country> updateCountry(@PathVariable Long countryId, @Valid @RequestBody Country country) {
-        service.updateCountry(countryId, country);
-        return ResponseEntity.ok(country);
+    public ResponseEntity<CountryDTO> updateCountry(@PathVariable Long countryId, @Valid @RequestBody CountryDTO countryDTO) {
+
+        try {
+            service.updateCountry(countryId, countryDTO);
+            return  new ResponseEntity<>(countryDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/deleteCountry/{countryId}")
-    public ResponseEntity<Long> deleteCountry(@PathVariable Long countryId) {
-        service.deleteCountry(countryId);
-        return ResponseEntity.ok(countryId);
+    public ResponseEntity<Void> deleteCountry(@PathVariable Long countryId) {
+
+        try {
+            service.deleteCountry(countryId);
+            return ResponseEntity.noContent().build();
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @GetMapping("/allCountries")
+    @GetMapping("/all")
     public ResponseEntity<List<CountryDTO>> findAll() {
-        return ResponseEntity.ok(service.findAll());
-    }
 
-    @GetMapping("/allCountriesView")
-    public ResponseEntity<List<CountryDTO>> findAllLogOut() {
-        return ResponseEntity.ok(service.findAllView());
+        try {
+            List<CountryDTO> countryDTOs = service.findAllCountries();
+            return new ResponseEntity<>(countryDTOs, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/getCountry/{id}")
-    public ResponseEntity<CountryDTO> getCountryByid(@PathVariable Long id) {
-        return ResponseEntity.of(service.findById(id));
+    public ResponseEntity<CountryDTO> findCountryById(@PathVariable Long id) {
+
+        try {
+            CountryDTO countryDTO = service.findCountryById(id).orElse(null);
+            return new ResponseEntity<>(countryDTO, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

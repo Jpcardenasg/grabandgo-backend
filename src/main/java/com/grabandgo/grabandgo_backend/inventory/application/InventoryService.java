@@ -1,10 +1,10 @@
 package com.grabandgo.grabandgo_backend.inventory.application;
 
+import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
+import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
+
 import java.util.List;
 import java.util.Optional;
-
-import com.grabandgo.grabandgo_backend.inventory.domain.Inventory;
-import com.grabandgo.grabandgo_backend.inventory.domain.DTO.InventoryDTO;
 
 public interface InventoryService {
 
@@ -14,11 +14,11 @@ public interface InventoryService {
 
     void deleteInventory(Long id);
 
-    List<Inventory> findAll();
+    List<Inventory> findAllInventories();
 
-    Optional<Inventory> findById(Long id);
+    Optional<Inventory> findInventoryById(Long id);
 
-    InventoryDTO convertToDTO(Inventory inventory);
+    InventoryDTO toDTO(Inventory inventory);
 
-    Inventory convertToEntity(InventoryDTO inventoryDTO);
+    Inventory toEntity(InventoryDTO inventoryDTO);
 }

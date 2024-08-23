@@ -2,10 +2,10 @@ package com.grabandgo.grabandgo_backend.product.infrastructure.adapter.in;
 
 import jakarta.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,8 +21,6 @@ import com.grabandgo.grabandgo_backend.product.application.ProductService;
 import com.grabandgo.grabandgo_backend.product.domain.Product;
 import com.grabandgo.grabandgo_backend.product.domain.DTO.ProductDTO;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 @Validated
 @RestController
 @RequestMapping("/api/product")
@@ -35,32 +33,71 @@ public class ProductController {
     }
 
     @PostMapping("/saveProduct")
-    public ResponseEntity<Product> saveProduct(@Valid @RequestBody ProductDTO product) {
-        Product newProduct = service.convertToEntity(product);
-        service.saveProduct(newProduct);
-        return ResponseEntity.ok(newProduct);
+    public ResponseEntity<ProductDTO> saveProduct(@Valid @RequestBody ProductDTO productDTO) {
+
+        try {
+            Product product = service.toEntity(productDTO);
+            service.saveProduct(product);
+            ProductDTO response = service.toDTO(product);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/updateProduct/{productId}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long productId, @Valid @RequestBody Product product) {
-        service.updateProduct(productId, product);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductDTO productDTO) {
+
+        try{
+            Product product = service.toEntity(productDTO);
+            service.updateProduct(productId, product);
+            ProductDTO response = service.toDTO(product);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/deleteProduct/{productId}")
-    public ResponseEntity<Long> deleteProduct(@PathVariable Long productId) {
-        service.deleteProduct(productId);
-        return ResponseEntity.ok(productId);
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+
+        try{
+            service.deleteProduct(productId);
+            return ResponseEntity.noContent().build();
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/allProducts")
     public ResponseEntity<List<ProductDTO>> findAll() {
-        return ResponseEntity.ok(service.fetchProductsList());
+
+        try{
+            List<Product> products = service.findAllProducts();
+            List<ProductDTO> productDTOS = products.stream()
+                    .map(service::toDTO)
+                    .toList();
+            return new ResponseEntity<>(productDTOS, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/getProduct/{id}")
-    public ResponseEntity<Optional<ProductDTO>> getMethodName(@RequestParam Long id) {
-        return ResponseEntity.ok(service.getProductById(id));
+    public ResponseEntity<ProductDTO> findProductById(@PathVariable Long id) {
+
+        try{
+            Product product = service.findProductById(id).orElse(null);
+            ProductDTO response = service.toDTO(product);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

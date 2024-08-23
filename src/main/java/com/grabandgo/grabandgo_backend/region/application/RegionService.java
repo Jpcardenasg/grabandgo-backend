@@ -1,22 +1,24 @@
 package com.grabandgo.grabandgo_backend.region.application;
 
-import java.util.List;
-
-import com.grabandgo.grabandgo_backend.region.domain.Region;
 import com.grabandgo.grabandgo_backend.region.domain.DTO.RegionDTO;
+import com.grabandgo.grabandgo_backend.region.domain.Region;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface RegionService {
 
-    Region saveRegion(Region region);
+    void saveRegion(RegionDTO regionDTO);
 
-    Region updateRegion(Long id, Region region);
+    void updateRegion(Long id,  RegionDTO regionDTO);
 
     void deleteRegion(Long id);
 
-    Region getRegionById(Long id);
+    List<RegionDTO> findAllRegions();
 
-    List<Region> fetchRegionsList();
+    Optional<RegionDTO> findRegionById(Long id);
 
-    List<RegionDTO> fetchRegionsListView();
+    RegionDTO toDTO(Region region);
 
+    Region toEntity(RegionDTO regionDTO);
 }

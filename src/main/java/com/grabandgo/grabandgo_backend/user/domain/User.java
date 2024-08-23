@@ -3,6 +3,7 @@ package com.grabandgo.grabandgo_backend.user.domain;
 import java.util.Collection;
 import java.util.List;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,19 +24,13 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-/**
- * User
- */
-@Data
-@Builder
+
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "\"user\"", uniqueConstraints = { @UniqueConstraint(columnNames = "username") })
 public class User implements UserDetails {
 
@@ -48,14 +43,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @JsonBackReference("employee-user")
     @OneToOne(mappedBy = "user")
-    @JoinColumn(name = "employeeId")
     private Employee employee;
 
-    @JsonBackReference("customer-user")
     @OneToOne(mappedBy = "user")
-    @JoinColumn(name = "customerId")
     private Customer customer;
 
     @Transactional
